@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap');
+
+/* .
+https://www.figma.com/file/ZEzekTBzzBdTPx0AP9US41/dw-servicing=1%3A2?node-id
+. */
+
+:root {
+	/* --secondary-color: #7c818b; */
+	--secondary-color: #656668;
+	--darkblue: #2f3a5f;
+	--light-black: rgb(85, 83, 83);
+	--links-color: black;
+	--contact-color: #0000eb;
+	--box-color: #d3e5f1;
+	--white: white;
+	--black: black;
+	--spacing: 0.1rem;
+	--max-width: 1170px;
+	--fixed-width: 620px;
+	--ff-primary: 'Roboto', sans-serif;
+	--ff-secondary: 'Open Sans', sans-serif;
+}
+
+html {
+	font-size: calc(60% + 0.8vmin);
+	/* scroll-behavior: smooth; */
+}
+
+* {
+	margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+}
+
+body {
+	/* roboto */
+	font-family: var(--ff-secondary);
+	line-height: 1.5;
+	/* line-height: 2px+ 2ex + 2px; */
+}
+
+/* p {
+	max-width: 70ch;
+} */
+
+/* fonts responsive*/
+p,
+li,
+h1,
+h2,
+h3 {
+	/* long words break to new line */
+	overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: var(--spacing);
+	/* text-transform: capitalize; */
+
+	line-height: 1.25;
+	margin-bottom: 0.75rem;
+	color: var(--secondary-color);
+	font-family: var(--ff-primary);
+}
+h1 {
+	font-size: 2.2rem;
+}
+h2 {
+	font-size: 1.6rem;
+}
+h3 {
+	font-size: 1.3rem;
+}
+
+p {
+	margin-bottom: 1.25rem;
+	color: var(--secondary-color);
+}
+
+ul {
+	list-style-type: none;
+}
+
+/* other */
+
+a {
+	text-decoration: none;
+}
+hr {
+	border: none;
+	border-top: 1px solid var(--secondary-color);
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+/* Website */
+.App {
+	/* background-color: red; */
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.main-container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/* large /desktops*/
+@media screen and (min-width: 1125px) {
+	.main-container {
+		width: 65%;
+		max-width: var(--max-width);
+		/* border: 2px solid red; */
+	}
+}

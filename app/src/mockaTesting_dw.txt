@@ -1,0 +1,11 @@
+API testing
+
+- Mocha: https://mochajs.org/
+
+- Chai: https://www.chaijs.com/
+
+- Chai_http: https://www.chaijs.com/plugins/chai-http/
+
+- Cheat sheet: https://devhints.io/chai
+
+Add "mocharc.json" file

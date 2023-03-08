@@ -1,0 +1,100 @@
+#project-page {
+	min-height: 50vh;
+}
+
+.project-nav > .flex-item {
+	margin-bottom: 0.5em;
+}
+
+/* edit customer "select" option width */
+.amend-customer-dropdown {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 
+customer edit component buttons */
+#customer-edit {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#btn-delete {
+	background-color: red;
+}
+
+#btn-delete:hover {
+	color: red;
+	background-color: white;
+	border: solid red 2px;
+}
+
+/* project component  + edit project- checkbox */
+.checkbox-project {
+	display: grid;
+	grid-template-columns: 1em auto;
+	gap: 0.5em;
+	border: 2px solid var(--secondary-color);
+	border-radius: 5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.85em;
+	padding-bottom: 0.85em;
+}
+input[type='checkbox'] {
+	margin-left: 0.25em;
+	accent-color: black;
+}
+
+/* searchForm */
+
+legend {
+	margin-left: 1.25em;
+	color: black;
+	font-weight: bolder;
+}
+
+.radio-container {
+	display: grid;
+	grid-template-columns: 1.5em auto;
+	gap: 0.5em;
+}
+
+input[type='radio'] {
+	margin-right: 1em;
+	accent-color: black;
+}
+/* end of search component */
+
+/* projectList component */
+.project-box {
+	border: 1px solid black;
+	margin-top: 1em;
+	padding: 1.5em;
+}
+
+/* projectAmend component */
+.comment-container {
+	margin-left: auto;
+	width: 90%;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.project-comment-box {
+	border: 2px solid black;
+	margin-bottom: 0.75em;
+	padding: 1.5em;
+	background-color: rgb(141, 188, 141);
+	border-radius: 5px;
+}
+
+.project-comment-box-created {
+	margin-bottom: 0.5em;
+}
+
+.amendTextarea {
+	background-color: rgb(216, 247, 216);
+}

@@ -1,0 +1,21 @@
+.forgot-pw {
+	margin-top: 1em;
+	color: var(--contact-color);
+}
+.text-center {
+	text-align: center;
+}
+
+@media screen and (min-width: 576px) {
+	.sign-in {
+		width: 80%;
+		margin: auto;
+		max-width: var(--fixed-width);
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1176px) {
+}

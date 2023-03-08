@@ -1,0 +1,22 @@
+.form-check {
+	display: flex;
+	flex-direction: row;
+
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.form-check-input {
+	width: 5%;
+}
+.form-check-label {
+	color: rgb(241, 238, 238);
+}
+
+#necessary {
+	opacity: 0.6;
+}
+
+.consent-form * p {
+	color: rgb(176, 174, 174);
+}

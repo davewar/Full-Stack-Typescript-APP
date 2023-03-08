@@ -1,0 +1,101 @@
+.user-box {
+	border: 2px solid black;
+	margin-top: 1em;
+	margin-top: 1em;
+	padding: 1.5em;
+	border-radius: 16px;
+}
+
+.user-row {
+	width: 100%;
+	margin: 0em auto;
+	display: flex;
+	flex: 1;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	border-bottom: 1px solid lightgrey;
+}
+.user-row:nth-last-child(2) {
+	border-bottom: none;
+}
+.user-row:last-of-type {
+	border-bottom: none;
+}
+.user-label {
+	width: 28%;
+	font-weight: bold;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+}
+.user-data {
+	width: 70%;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+}
+
+/* .email-user {
+	border-bottom: 2px solid black;
+} */
+.inactive {
+	background-color: lightgrey;
+}
+
+.delete-user-button,
+.edit-user-button {
+	width: 100%;
+	margin-top: 0.5em;
+}
+
+.delete-user-button {
+	width: 100%;
+	background-color: red;
+	margin-top: 1em;
+}
+
+.delete-user-button:hover {
+	color: red;
+	background-color: white;
+	border: 2px solid red;
+}
+
+@media screen and (min-width: 700px) {
+	.user-label {
+		width: 20%;
+	}
+	.user-data {
+		width: 75%;
+	}
+	.delete-user-button,
+	.edit-user-button {
+		margin-left: auto;
+		margin-top: 0.7em;
+		width: 25%;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.user-container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.user-box {
+		width: 48%;
+		padding: 1em 0.5em;
+	}
+
+	.user-label {
+		width: 25%;
+	}
+	.user-data {
+		width: 70%;
+	}
+
+	.delete-user-button,
+	.edit-user-button {
+		margin-left: auto;
+		width: 25%;
+	}
+}

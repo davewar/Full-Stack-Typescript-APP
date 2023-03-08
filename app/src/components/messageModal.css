@@ -1,0 +1,144 @@
+.centered {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: grey solid 4px;
+	border-radius: 5px;
+	animation: animatetop 1s ease;
+	/* /// */
+}
+
+.modal {
+	width: 400px;
+	height: 175px;
+	background: white;
+	color: black;
+	z-index: 10;
+}
+
+.modalHeader {
+	height: 50px;
+	background: white;
+}
+
+.heading {
+	margin: 0;
+	padding: 0.5em;
+	color: black;
+	text-align: left;
+	font-weight: bold;
+}
+
+.modalContent {
+	padding: 0.5em;
+	color: black;
+	text-align: left;
+	border-top: 1px grey solid;
+	border-bottom: 1px grey solid;
+	padding: 0.5em 0em 0em 0.5em;
+}
+
+.modalActions {
+	position: absolute;
+	margin-top: 1em;
+	margin-bottom: 0.25em;
+	width: 100%;
+}
+
+.actionsContainer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.closeBtn {
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 18px;
+	background: white;
+	position: absolute;
+	right: 0.5em;
+	top: 0.5em;
+}
+
+.addBtn,
+.updateBtn,
+.deleteBtn,
+.cancelBtn {
+	border-radius: 5px;
+	padding: 0.75em;
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.4s ease-out;
+	margin-right: 1em;
+}
+
+.cancelBtn {
+	background-color: lightgrey;
+}
+.cancelBtn:hover {
+	color: lightgrey;
+	background-color: white;
+	border: lightgrey 2px solid;
+}
+
+.deleteBtn {
+	background-color: red;
+}
+
+.deleteBtn:hover {
+	color: red;
+	background-color: white;
+	border: 2px solid red;
+}
+
+.updateBtn {
+	background-color: var(--contact-color);
+}
+
+.updateBtn:hover {
+	color: var(--contact-color);
+	background-color: white;
+	border: 2px solid var(--contact-color);
+}
+
+.addBtn {
+	background-color: green;
+}
+
+.addBtn:hover {
+	color: green;
+	background-color: white;
+	border: 2px solid green;
+}
+
+@media only screen and (max-width: 600px) {
+	.modal {
+		width: 300px;
+		height: 150px;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.modal {
+		width: 185px;
+		height: 170px;
+	}
+}
+
+/* Add Animation */
+
+@keyframes animatetop {
+	from {
+		left: -50%;
+
+		opacity: 0;
+	}
+	to {
+		top: 50%;
+		opacity: 1;
+	}
+}

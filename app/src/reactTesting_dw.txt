@@ -1,0 +1,49 @@
+RT Query Methods Summary
+
+https://testing-library.com/docs/queries/about
+
+		        getBy	findBy	queryBy		    getAllBy	findAllBy	queryAllBy
+No Match        error	error	NULL		    error	    error	    array
+1  Match		return	return	return		    array	    array	    array
+1+ Match	    error	error	error		    array	    array	    array
+Await		    no	    YES	    no		        no	        YES	        no
+
+TABLE OF CONTENTS: CUSTOM MATCHERS EXAMPLES
+https://github.com/testing-library/jest-dom#readme
+
+toBeDisabled
+toBeEnabled
+toBeEmptyDOMElement
+toBeInTheDocument
+toBeInvalid
+toBeRequired
+toBeValid
+toBeVisible
+toContainElement
+toContainHTML
+toHaveAccessibleDescription
+toHaveAccessibleName
+toHaveAttribute
+toHaveClass
+toHaveFocus
+toHaveFormValues
+toHaveStyle
+toHaveTextContent
+toHaveValue
+toHaveDisplayValue
+toBeChecked
+toBePartiallyChecked
+toHaveErrorMessage
+
+Download the chrome playground extension or use https://testing-playground.com/ : easier to find html items
+
+https://testing-library.com/docs/ecosystem-user-event
+
+COMMON MISTAKES:
+https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
+
+find = async
+query = use when item not to befound
+get = all other
+
+screen.debug() // screen.debug(element)

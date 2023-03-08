@@ -1,0 +1,19 @@
+User-agent: *
+
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /resetAccount
+Disallow: /reset_password
+Disallow: /user/activate
+Disallow: /contact
+
+Disallow: /dashboard
+Disallow: /unauthorized
+Disallow: /emails
+Disallow: /users
+
+Sitemap: https://www.test.com/sitemap_index.xml
+
+
+

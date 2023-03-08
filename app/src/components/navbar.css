@@ -1,0 +1,146 @@
+.header-title {
+	padding-top: 5%;
+	padding-bottom: 2%;
+	color: var(--primary-color);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	/* color: var(--header-color); */
+	color: var(--darkblue);
+	font-weight: 900;
+	margin: 0.5em 0;
+	font-size: 2.5rem;
+}
+
+header {
+	position: relative;
+	/* border: solid; */
+	width: 100%;
+}
+
+.cloud-img {
+	height: 100%;
+	max-height: 15vh;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	color: var(--box-color);
+}
+
+@media (min-width: 600px) {
+	.cloud-img {
+		max-height: 14vh;
+	}
+}
+
+@media (min-width: 600px) {
+	.cloud-img {
+		max-height: 13vh;
+	}
+}
+.nav-container > .right > .flex-item {
+	margin-bottom: 0.5em;
+}
+.link-item {
+	font-weight: bold;
+	color: var(--links-color);
+	position: relative;
+	border: none;
+	outline: none;
+}
+
+.link-item.underline::before {
+	content: '';
+	position: absolute;
+	background-color: var(--contact-color);
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 2px;
+	transform: scaleX(0);
+	transition: color, top, left, right, bottom, 0.3s ease-in-out;
+}
+
+.link-item.underline:hover::before,
+.link-item.underline:focus::before {
+	transform: scaleX(1);
+}
+
+button {
+	border: none;
+}
+.btn {
+	border-radius: 5px;
+	padding: 5px;
+	color: white;
+	background-color: var(--contact-color);
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.5s ease-out;
+}
+
+.btn:hover {
+	/* transform: scale(1.1); */
+	color: var(--contact-color);
+	background-color: white;
+	border: var(--contact-color) 2px solid;
+}
+
+.contactbtn {
+	margin-top: 0.75em;
+}
+
+@media screen and (min-width: 576px) {
+	.nav-container {
+		display: flex;
+		flex-direction: row;
+	}
+	.left {
+		width: 40%;
+	}
+	.right {
+		width: 60%;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+		/* border: solid; */
+	}
+
+	.flex-item {
+		/* margin: 2% 5% 2% 0; */
+	}
+	/* select a flex item with a flex item to the left only */
+	.flex-item + .flex-item {
+		margin-right: 0%;
+		margin-left: 3%;
+	}
+}
+
+/* pcmonitor */
+@media screen and (min-width: 768px) {
+	.main-container {
+		max-width: 70%;
+		margin: 0 auto;
+		/* background-color: red; */
+	}
+}
+
+/* large*/
+@media screen and (min-width: 1025px) {
+	/* move up */
+	.header-title {
+		padding-top: 2%;
+	}
+	/* move cloud right */
+	/* .wave-container {
+		position: absolute;
+		top: 0%;
+		left: 10%;
+	} */
+}

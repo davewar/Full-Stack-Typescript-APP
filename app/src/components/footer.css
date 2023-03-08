@@ -1,0 +1,25 @@
+#footer {
+	background-color: var(--darkblue);
+	margin-top: 5%;
+}
+
+#footer-box {
+	width: 100%;
+	margin: 0% auto;
+	text-align: center;
+	padding: 2rem;
+}
+#footer-box > button {
+	margin-top: 0;
+}
+
+#footer-box h1,
+#footer-box h3,
+#footer-box p {
+	color: var(--white);
+}
+
+#footer-title {
+	margin-top: 0.5em;
+	margin-bottom: 1.1em;
+}

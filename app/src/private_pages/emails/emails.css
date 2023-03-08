@@ -1,0 +1,208 @@
+.email-container {
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+}
+#emails-info {
+	margin-top: 1em;
+	text-decoration: underline;
+}
+.table-emails {
+	width: 100%;
+	min-width: 100%;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th {
+	color: black;
+	font-weight: bold;
+	background-color: rgb(242, 238, 238);
+	background-color: var(--contact-color);
+	color: white;
+}
+td,
+th {
+	padding: 0.5em;
+	border-bottom: 2px solid black;
+	text-align: left;
+	vertical-align: middle;
+	word-wrap: break-word;
+	max-width: 150px !important;
+}
+
+tr:hover {
+	background-color: lightgrey;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+tr:hover .delete-icon {
+	background-color: lightgrey;
+}
+
+.delete-icon {
+	width: 25px;
+	height: 25px;
+	background-color: white;
+	border: none;
+}
+
+@media screen and (min-width: 1200px) {
+	.cell-date {
+		max-width: 60px !important;
+	}
+
+	.cell-action {
+		max-width: 35px !important;
+	}
+}
+
+@media only screen and (max-width: 699px) {
+	table,
+	tr,
+	td {
+		display: block;
+	}
+	table {
+		margin-left: 3em;
+		margin-right: 0.5em;
+	}
+
+	tr {
+		padding: 0.7em 2vw;
+		border: 2px solid black;
+		width: 515px;
+	}
+	td:nth-of-type(1),
+	td:nth-of-type(2),
+	td:nth-of-type(3),
+	td:nth-of-type(4),
+	td:nth-of-type(5) {
+		text-align: left;
+	}
+	td {
+		border: none;
+	}
+
+	thead {
+		display: none;
+	}
+
+	td::after {
+		display: inline;
+		font-weight: bold;
+
+		text-decoration: underline;
+	}
+
+	td:nth-child(1)::after {
+		content: 'Name';
+	}
+	td:nth-child(2)::after {
+		content: 'Email';
+	}
+	td:nth-child(3)::after {
+		content: 'Comment';
+	}
+	td:nth-child(4)::after {
+		content: 'Date';
+	}
+	td:nth-child(5)::after {
+		content: 'Action';
+	}
+
+	td {
+		display: grid;
+		grid-template-columns: 400px 70px;
+		grid-gap: 0.5em 0.5em;
+	}
+
+	.delete-icon {
+		width: 25px;
+		height: 25px;
+		background-color: white;
+		border: none;
+	}
+
+	tr:hover {
+		background-color: lightgrey;
+	}
+	tr:hover > .delete-icon {
+		background-color: lightgrey;
+	}
+	td > button {
+		background-color: white;
+	}
+
+	tr:hover > td > button {
+		background-color: lightgrey;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	table {
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+	}
+
+	tr {
+		width: 460px;
+	}
+
+	td {
+		grid-template-columns: 350px 85px;
+	}
+}
+
+@media only screen and (max-width: 508px) {
+	table {
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+	}
+
+	tr {
+		width: 400px;
+	}
+
+	td {
+		grid-template-columns: 300px 75px;
+	}
+}
+
+@media only screen and (max-width: 445px) {
+	table {
+		margin-left: 0.1em;
+		margin-right: 0.1em;
+	}
+
+	tr {
+		width: 350px;
+	}
+
+	td {
+		grid-template-columns: 250px 75px;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	table {
+		margin-left: 0.05em;
+		margin-right: 0.05em;
+	}
+
+	tr {
+		width: 360px;
+	}
+
+	td {
+		grid-template-columns: 270px 60px;
+	}
+}
+
+#noEmails {
+	padding-top: 0.5em;
+	font-weight: bold;
+}

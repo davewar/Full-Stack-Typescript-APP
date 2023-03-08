@@ -1,0 +1,79 @@
+.free-quote {
+	text-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: var(--black);
+}
+
+.box-container {
+	display: flex;
+	flex-direction: column;
+	margin: 5% auto;
+	gap: 1em;
+}
+
+.box {
+	border: solid 1px black;
+	/* width */
+	flex-basis: 100%;
+	padding: 2em;
+}
+
+.box-image {
+	display: block;
+	width: 10%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.box > h3,
+.box > p {
+	text-align: center;
+	margin-bottom: 0.25em;
+}
+
+.box-title {
+	font-weight: bolder;
+	color: var(--black);
+}
+
+.box {
+	transition: all 0.3s ease-in-out;
+}
+
+.box:hover {
+	background-color: var(--box-color);
+	color: var(--white);
+	transform: scale(1.05);
+	box-shadow: 0rem 0rem 10px black;
+}
+
+@media screen and (min-width: 500px) {
+	.box-container {
+		width: 70%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.box-container {
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		gap: 2em;
+		max-width: 800px;
+	}
+
+	.box {
+		flex-basis: 100%;
+		padding: 1.25em;
+	}
+	.box-image {
+		width: 25%;
+	}
+}
