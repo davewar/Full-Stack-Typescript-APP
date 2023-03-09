@@ -11,23 +11,26 @@ import { FaWhatsapp } from 'react-icons/fa';
 let map =
 	'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d159019.04030805102!2d-0.006866832327827696!3d51.482525396909296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8afb31d647aa3%3A0x31adb65f3f5a8bf8!2s20%20Sussex%20Rd%2C%20Erith%20DA8%201JB!5e0!3m2!1sen!2suk!4v1668516813646!5m2!1sen!2suk';
 
-const Contact = () => {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [comment, setComment] = useState('');
+const Contact: React.FC = () => {
+	const [name, setName] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [comment, setComment] = useState<string>('');
 	// inputs not correct
-	const [nameErr, setNameErr] = useState('');
-	const [emailErr, setEmailErr] = useState('');
-	const [commentErr, setCommentErr] = useState('');
+	const [nameErr, setNameErr] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
+	const [commentErr, setCommentErr] = useState<string>('');
 
-	const [signInErr, setSignInErr] = useState('');
-	const [success, setSuccess] = useState('');
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 
 	// let { data, isError, customFetch } = useFetch();
 
-	// email success
-
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLTextAreaElement>,
+		item: string
+	) => {
 		setSignInErr('');
 		setSuccess('');
 
@@ -38,6 +41,7 @@ const Contact = () => {
 
 		if (item === 'name') {
 			setName(e.target.value);
+
 			e.target.value.length < 3
 				? setNameErr('Name must be at least 3 characters!')
 				: setNameErr('');
@@ -57,7 +61,7 @@ const Contact = () => {
 		}
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setSignInErr('');
 		setSuccess('');
@@ -125,27 +129,24 @@ const Contact = () => {
 
 						<form className='contact-form' onSubmit={handleSubmit}>
 							<div className='form-group'>
-								<label htmlFor='name' type='text'>
-									Name:
-								</label>
+								<label htmlFor='name'>Name:</label>
 								<input
 									type='text'
 									name='name'
 									className='form-control'
 									placeholder='Full Name'
 									id='name'
-									// required
+									required
 									onChange={(e) => handleChange(e, 'name')}
 									value={name}
 									autoComplete='off'
+									autoFocus
 								/>
 								{nameErr && <small className='text-danger'>{nameErr}</small>}
 							</div>
 
 							<div className='form-group'>
-								<label htmlFor='email' type='email'>
-									Email:
-								</label>
+								<label htmlFor='email'>Email:</label>
 								<input
 									type='email'
 									name='email'
@@ -159,12 +160,10 @@ const Contact = () => {
 							</div>
 
 							<div className='form-group'>
-								<label htmlFor='comment' type='text'>
-									Briefly describe what you need:
-								</label>
+								<label htmlFor='comment'>Briefly describe what you need:</label>
 								<textarea
-									rows='4'
-									cols='50'
+									rows={4}
+									cols={50}
 									name='comment'
 									autoComplete='off'
 									value={comment}

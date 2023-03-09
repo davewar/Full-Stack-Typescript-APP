@@ -83,7 +83,7 @@ const Home = () => {
 							Pivot, Power View, Business Objects and Qlikview.
 						</p>
 
-						<button id='more-button' onClick={(() => scrollToTop, onClick)}>
+						<button id='more-button' onClick={(() => scrollToTop(), onClick)}>
 							<Link id='more-btn' to='/services'>
 								More Info
 							</Link>

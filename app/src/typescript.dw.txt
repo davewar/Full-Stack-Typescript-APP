@@ -1,0 +1,18 @@
+Type vs Interface:
+Both can be used to describe the shape of an object or a function signature.
+key distinction between is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
+
+
+https://medium.com/@magenta2127/use-which-interface-or-type-alias-in-typescript-bdfaf2e882ae
+
+Which to use according to the above link:
+
+                            interface   type alias
+describe obj                yes         no  
+extend parent               yes         no
+class                       yes         no
+declaration merge           yes         no
+describe func               no          yes
+more than object types      no          yes
+with typeof type operator   no          yes
+       
