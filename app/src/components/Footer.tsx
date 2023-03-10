@@ -1,10 +1,10 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Paths from '../constants/routes';
 import './footer.css';
 import { scrollToTop } from '../utils/helpers';
 
 const Footer = () => {
+	let year: number = new Date().getFullYear();
 	return (
 		<>
 			<footer id='footer'>
@@ -22,9 +22,7 @@ const Footer = () => {
 						</button>
 
 						<h1 id='footer-title'>DW-Serv</h1>
-						<p>
-							Copyright &copy; {new Date().getFullYear()}. All rights Reserved.
-						</p>
+						<p>Copyright &copy; {year}. All rights Reserved.</p>
 					</div>
 				</div>
 			</footer>

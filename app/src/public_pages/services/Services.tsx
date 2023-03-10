@@ -1,4 +1,3 @@
-import React from 'react';
 import './services.css';
 import Box from '../../components/Box';
 // images

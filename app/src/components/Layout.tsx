@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -6,7 +5,7 @@ import PageSeo from './seo/PageSeo';
 import Consent from './cookieConsent/Consent';
 
 const Layout = () => {
-	const cookiesOn = false;
+	const cookiesOn: boolean = false;
 	return (
 		<>
 			<PageSeo />

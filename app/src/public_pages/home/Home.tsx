@@ -1,7 +1,5 @@
-import React from 'react';
 import Box from '../../components/Box';
 import './home.css';
-import { scrollToTop } from '../../utils/helpers';
 import pcImg from '../../assets/images/sysadmin_03.jpg';
 import tickImg from '../../assets/images/tick.png';
 import ReactGA from 'react-ga4';
@@ -9,7 +7,7 @@ import ReactGA from 'react-ga4';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-	const onClick = () => {
+	const onClick = (): void => {
 		ReactGA.event({
 			category: 'clicked_servicesBtn_category',
 			action: 'clicked_servicesBtn_action',
@@ -83,7 +81,12 @@ const Home = () => {
 							Pivot, Power View, Business Objects and Qlikview.
 						</p>
 
-						<button id='more-button' onClick={(() => scrollToTop(), onClick)}>
+						<button
+							id='more-button'
+							onClick={() => {
+								onClick();
+							}}
+						>
 							<Link id='more-btn' to='/services'>
 								More Info
 							</Link>

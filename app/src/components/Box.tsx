@@ -1,4 +1,3 @@
-import React from 'react';
 import './box.css';
 // images
 import emailImg from '../assets/images/email.png';

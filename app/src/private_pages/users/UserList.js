@@ -1,7 +1,7 @@
 import './userList.css';
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
-import Loading from '../../components/Loading';
+import Loading from '../../components/Loading.tsx';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import User from './User';
 import MessageModal from '../../components/MessageModal';

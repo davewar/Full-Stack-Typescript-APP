@@ -5,7 +5,12 @@ import vector1Img from '../assets/images/vector1.svg';
 
 import { UserContext } from '../contexts/user';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+
+const activeStyles = {
+	fontWeight: 'bold',
+	color: '#0000eb',
+};
 
 const Navbar = () => {
 	const location = useLocation(null);
@@ -21,9 +26,13 @@ const Navbar = () => {
 					<h1 className='title'>DW-Serv</h1>
 					<div className=''>
 						{!isLogged ? (
-							<Link className='link-item underline' to={Paths.LOGINPATH}>
+							<NavLink
+								style={({ isActive }) => (isActive ? activeStyles : null)}
+								className='link-item underline'
+								to={Paths.LOGINPATH}
+							>
 								Log In
-							</Link>
+							</NavLink>
 						) : null}
 
 						{isLogged ? (

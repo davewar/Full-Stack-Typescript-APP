@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { UserContext } from '../../contexts/user';
@@ -8,17 +8,21 @@ import { emailRegEx } from '../../utils/helpers';
 
 const Login = () => {
 	const { setAccessToken, setRole } = useContext(UserContext); //global user
+	// const currentuser = useContext(UserContext); //global user
 
-	const [email, setEmail] = useState('');
-	const [emailErr, setEmailErr] = useState('');
-	const [password, setPassword] = useState('');
-	const [passwordErr, setPasswordErr] = useState('');
-	const [signInErr, setSignInErr] = useState('');
-	const [visable, setVisable] = useState('false');
+	const [email, setEmail] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [passwordErr, setPasswordErr] = useState<string>('');
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [visable, setVisable] = useState<boolean>(false);
 
 	const navigate = useNavigate();
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: string
+	) => {
 		//clear
 		setSignInErr('');
 
@@ -54,10 +58,10 @@ const Login = () => {
 		}
 	};
 
-	const handleSignin = async (e) => {
+	const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		let baseUrl = process.env.REACT_APP_BACKEND_URL;
+		let baseUrl: string | undefined = process.env.REACT_APP_BACKEND_URL;
 
 		if (email && password && !emailErr && !passwordErr) {
 			setSignInErr('');
@@ -76,9 +80,11 @@ const Login = () => {
 				const data = await res.json();
 
 				if (data.msg) {
-					localStorage.setItem('firstlogin', true);
+					localStorage.setItem('firstlogin', 'true');
 					setAccessToken(data.msg.accesstoken);
 					setRole(data.msg.user.role);
+					// currentuser?.setAccessToken(data.msg.accesstoken);
+					// currentuser?.setRole(data.msg.user.role);
 					setEmail('');
 					setPassword('');
 
@@ -87,13 +93,15 @@ const Login = () => {
 					setSignInErr(data.errors);
 				}
 			} catch (err) {
-				console.log('dw error message login:', err.message);
-				setSignInErr('No Server Response');
+				if (err instanceof Error) {
+					console.log('dw error message login:', err.message);
+					setSignInErr('No Server Response');
+				}
 			}
 		}
 	};
 
-	const toggleType = () => {
+	const toggleType = (): void => {
 		setVisable((prev) => !prev);
 	};
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
-import Loading from '../../components/Loading';
+import Loading from '../../components/Loading.tsx';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import Email from './Email';
 import './emails.css';

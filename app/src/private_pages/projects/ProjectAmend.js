@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
-import Loading from '../../components/Loading';
+import Loading from '../../components/Loading.tsx';
 import { useParams } from 'react-router-dom';
 import { Products } from '../../constants/products';
 import { v4 as uuidv4 } from 'uuid';

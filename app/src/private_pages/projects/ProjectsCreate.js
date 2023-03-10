@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import '../../public_pages/accounts/login.css';
-import Loading from '../../components/Loading';
+import Loading from '../../components/Loading.tsx';
 
 import { scrollToTop } from '../../utils/helpers';
 import Project from './Project';

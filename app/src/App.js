@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Pages from './pages/Pages';
-import Loading from './components/Loading';
+import Loading from './components/Loading.tsx';
 
 import useRefreshToken from './hooks/useRefreshToken';
 
