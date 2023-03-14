@@ -1,23 +1,35 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import Email from './Email';
 import './emails.css';
 import MessageModal from '../../components/MessageModal';
 
+type EmailObjProp = {
+	_id: string;
+	comment: string;
+	createdAt: string;
+	email: string;
+	name: string;
+	updatedAt: string;
+};
+
+type EmailKeys = keyof EmailObjProp;
+
 const EmailList = () => {
 	const { accessToken } = useContext(UserContext); //global user
 
-	const [emails, setEmails] = useState();
+	const [emails, setEmails] = useState<EmailObjProp[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [errors, setErrors] = useState('');
+	const [errors, setErrors] = useState<string>('');
 
 	const [show, setShow] = useState(false);
-	const [deleteId, setDeleteId] = useState(false);
+	const [deleteId, setDeleteId] = useState<string | null>(null);
+
 	//sorting
-	const [direction, setDirection] = useState();
-	const [value, setValue] = useState();
+	const [direction, setDirection] = useState<string>('');
+	const [value, setValue] = useState<EmailKeys>('name');
 
 	let { callFetch } = usePrivateFetch();
 
@@ -43,7 +55,7 @@ const EmailList = () => {
 					setShow(false);
 				}
 			} catch (err) {
-				console.log('dw email ', err.message);
+				if (err instanceof Error) console.log('dw email ', err.message);
 				setLoading(false);
 				setErrors('No Server Response');
 				setShow(false);
@@ -88,7 +100,7 @@ const EmailList = () => {
 				setShow(false); //close modal
 			}
 		} catch (err) {
-			console.log('dw email ', err.message);
+			if (err instanceof Error) console.log('dw email ', err.message);
 			setLoading(false);
 			setErrors('No Server Response');
 			setShow(false);
@@ -96,19 +108,23 @@ const EmailList = () => {
 	};
 	// user clicks on delete icon, we open modal, this gets the ID of the deleted item selected.
 	//id is then stored in state, so that we can use if user confirms on the modal to delete item.
-	const getIdDelete = (id) => {
+	const getIdDelete = (id: string): void => {
 		setDeleteId(id);
 		setShow(true); // show modal
 	};
 
 	// user chosen not to delete email, clear state & close modal
-	const closeModal = (id) => {
-		setDeleteId('');
+	const closeModal = (): void => {
+		setDeleteId(null);
 		setShow(false);
 	};
 
 	// sorting
-	const orderBy = (emails, value, direction) => {
+	const orderBy = (
+		emails: EmailObjProp[],
+		value: EmailKeys,
+		direction: string
+	): EmailObjProp[] => {
 		if (direction === 'asc') {
 			return [...emails].sort((a, b) => (a[value] > b[value] ? 1 : -1));
 		}
@@ -130,7 +146,7 @@ const EmailList = () => {
 		}
 	};
 
-	const setValueAndDirection = (value) => {
+	const setValueAndDirection = (value: EmailKeys): void => {
 		switchDirection();
 		setValue(value);
 	};

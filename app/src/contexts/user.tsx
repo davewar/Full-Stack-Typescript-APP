@@ -3,8 +3,8 @@ import React, { createContext, useEffect, useState } from 'react';
 type UserContextType = {
 	user: string | null;
 	setUser: React.Dispatch<React.SetStateAction<string>>;
-	accessToken: string | null;
-	setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
+	accessToken: string;
+	setAccessToken: React.Dispatch<React.SetStateAction<string>>;
 	isLogged: boolean;
 	setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 	isUser: boolean;
@@ -29,7 +29,7 @@ const UserProvider = ({
 	children,
 }: UserContextProviderProps): React.ReactElement => {
 	const [user, setUser] = useState<string>('');
-	const [accessToken, setAccessToken] = useState<string | null>(null);
+	const [accessToken, setAccessToken] = useState<string>('');
 	const [isLogged, setIsLogged] = useState<boolean>(false);
 	const [isUser, setIsUser] = useState<boolean>(false);
 	const [isEditor, setIsEditor] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const UserProvider = ({
 			localStorage.removeItem('firstlogin');
 			// reset state
 			setUser('');
-			setAccessToken(null);
+			setAccessToken('');
 			setIsLogged(false);
 			setIsUser(false);
 			setIsEditor(false);

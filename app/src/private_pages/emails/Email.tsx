@@ -1,7 +1,16 @@
-import React from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 
-const Email = (props) => {
+type EmailObjProp = {
+	_id: string;
+	comment: string;
+	createdAt: string;
+	email: string;
+	name: string;
+	updatedAt: string;
+	getIdDelete: (id: string) => void;
+};
+
+const Email = (props: EmailObjProp) => {
 	const { _id: id, email, name, comment, createdAt } = props;
 
 	return (

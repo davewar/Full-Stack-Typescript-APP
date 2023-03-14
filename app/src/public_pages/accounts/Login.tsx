@@ -6,6 +6,8 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { AiOutlineEyeInvisible } from 'react-icons/ai';
 import { emailRegEx } from '../../utils/helpers';
 
+import { baseUrl } from '../../constants/roles';
+
 const Login = () => {
 	const { setAccessToken, setRole } = useContext(UserContext); //global user
 	// const currentuser = useContext(UserContext); //global user
@@ -22,7 +24,7 @@ const Login = () => {
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
 		item: string
-	) => {
+	): void => {
 		//clear
 		setSignInErr('');
 
@@ -61,7 +63,7 @@ const Login = () => {
 	const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		let baseUrl: string | undefined = process.env.REACT_APP_BACKEND_URL;
+		// let baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 		if (email && password && !emailErr && !passwordErr) {
 			setSignInErr('');

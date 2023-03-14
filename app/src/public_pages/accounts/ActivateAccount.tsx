@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
+// interface ActAccParams {
+// 	id: string;
+// }
+
 const ActivateAccount = () => {
-	const [err, setErr] = useState('');
-	const [success, setSuccess] = useState('');
+	const [err, setErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 
 	// /activation
-	const { id } = useParams();
+	const { id } = useParams<{ id: string }>();
 
-	const validate = async (id) => {
+	const validate = async (id: string) => {
 		try {
 			const res = await fetch('/user/activation', {
 				method: 'POST',
@@ -25,13 +29,14 @@ const ActivateAccount = () => {
 				setSuccess(data.msg);
 			}
 		} catch (err) {
-			console.log('dw error message forgot pw:', err.message);
+			if (err instanceof Error)
+				console.log('dw error message forgot pw:', err.message);
 			setErr('No Server Response');
 		}
 	};
 
 	useEffect(() => {
-		validate(id);
+		validate(id!); // "!" = tells TypeScript that even though something looks like it could be null, it wont be, needed to remove undefinded error
 	}, [id]);
 
 	return (

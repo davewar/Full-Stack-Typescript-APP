@@ -6,7 +6,6 @@ import phoneImg from '../../assets/images/phone-call.png';
 import emailImg from '../../assets/images/email.png';
 
 import { FaWhatsapp } from 'react-icons/fa';
-// import useFetch from '../../hooks/useFetch';
 
 let map =
 	'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d159019.04030805102!2d-0.006866832327827696!3d51.482525396909296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8afb31d647aa3%3A0x31adb65f3f5a8bf8!2s20%20Sussex%20Rd%2C%20Erith%20DA8%201JB!5e0!3m2!1sen!2suk!4v1668516813646!5m2!1sen!2suk';

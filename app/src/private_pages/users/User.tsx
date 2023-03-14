@@ -1,8 +1,34 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import EditUser from './EditUser';
 import { UserContext } from '../../contexts/user';
 
-const User = (props) => {
+type updateUserProp = {
+	role: number;
+	active: string;
+	validated: string;
+};
+
+type UserProps = {
+	IncorrectPW: number;
+	active: string;
+	createdAt: string;
+	email: string;
+	name: string;
+	role: number;
+	updatedAt: string;
+	validated: string;
+	_id: string;
+	deleteItem: () => void;
+	getIdDelete: (id: string) => void;
+	handleEditUser: (id: string, updateUser: updateUserProp) => void;
+	setErrors: React.Dispatch<React.SetStateAction<string>>;
+	setFail: React.Dispatch<React.SetStateAction<string>>;
+	setShow: React.Dispatch<React.SetStateAction<boolean>>;
+	setSuccess: React.Dispatch<React.SetStateAction<string>>;
+	show: boolean;
+};
+
+const User = (props: UserProps) => {
 	const [showModal, setShowModal] = useState(false);
 	const { isAdmin, isEditor } = useContext(UserContext);
 
@@ -20,7 +46,7 @@ const User = (props) => {
 		_id,
 	};
 
-	const dateCoversion = (time) => {
+	const dateCoversion = (time: string): string => {
 		return new Date(time).toLocaleString('en-GB', {
 			day: 'numeric',
 			month: 'long',

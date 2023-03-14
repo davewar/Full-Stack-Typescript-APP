@@ -1,33 +1,58 @@
 import './userList.css';
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import User from './User';
 import MessageModal from '../../components/MessageModal';
 import { useNavigate } from 'react-router-dom';
 
+type updateUserProp = {
+	role: number;
+	active: string;
+	validated: string;
+};
+
+type UserProps = {
+	IncorrectPW: number;
+	active: string;
+	createdAt: string;
+	email: string;
+	name: string;
+	role: number;
+	updatedAt: string;
+	validated: string;
+	_id: string;
+};
+
+type DataObjProp = {
+	header: string;
+	desc: string;
+	buttonDesc: string;
+	buttonType: string;
+};
+
 const UserList = () => {
 	const { accessToken, isAdmin, isEditor } = useContext(UserContext); //global user
 
-	const [users, setUsers] = useState();
+	const [users, setUsers] = useState<UserProps[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [errors, setErrors] = useState('');
+	const [errors, setErrors] = useState<string>('');
 
 	const [show, setShow] = useState(false); // edit modal
-	const [success, setSuccess] = useState('');
-	const [fail, setFail] = useState('');
+	const [success, setSuccess] = useState<string>('');
+	const [fail, setFail] = useState<string>('');
 
 	//delete Message Modal
 	const [deleteShow, setDeleteShow] = useState(false); //delete message box
-	const [deleteId, setDeleteId] = useState('');
+	const [deleteId, setDeleteId] = useState<string>('');
 
 	let { callFetch } = usePrivateFetch();
 
 	let navigate = useNavigate();
 
 	useEffect(() => {
-		let url = '/user';
+		let url = `/user`;
 		let options = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
@@ -44,13 +69,11 @@ const UserList = () => {
 					setUsers(data.msg);
 					setLoading(false);
 					setErrors('');
-					// setShow(false);
 				}
 			} catch (err) {
-				console.log('dw user ', err);
+				if (err instanceof Error) console.log('dw user ', err);
 				setLoading(false);
 				setErrors('No Server Response');
-				// setShow(false);
 			}
 		};
 		getUsers();
@@ -59,7 +82,7 @@ const UserList = () => {
 	}, []);
 
 	//update user
-	const handleEditUser = async (id, updateUser) => {
+	const handleEditUser = async (id: string, updateUser: updateUserProp) => {
 		let { role, active, validated } = updateUser;
 
 		//reset
@@ -103,7 +126,7 @@ const UserList = () => {
 				setShow(false);
 			}
 		} catch (err) {
-			console.log('dw user ', err);
+			if (err instanceof Error) console.log('dw user ', err);
 			setLoading(false);
 			setErrors('No Server Response');
 			setShow(false);
@@ -155,26 +178,26 @@ const UserList = () => {
 				setSuccess(data.msg);
 			}
 		} catch (err) {
-			console.log('dw email ', err.message);
+			if (err instanceof Error) console.log('dw email ', err.message);
 			setLoading(false);
 			setErrors('No Server Response');
 			setDeleteShow(false);
 		}
 	};
 
-	const getIdDelete = (id) => {
+	const getIdDelete = (id: string): void => {
 		setDeleteId(id);
 		setDeleteShow(true); // show modal
 	};
 
 	// user chosen not to delete email, clear state & close modal
-	const closeModal = (id) => {
+	const closeModal = (): void => {
 		setDeleteId('');
 		setDeleteShow(false);
 	};
 
 	//props for Message Modal
-	let dataObj = {
+	let dataObj: DataObjProp = {
 		header: 'Delete Confirmation',
 		desc: 'Are you sure you want to delete ?',
 		buttonDesc: 'Delete',

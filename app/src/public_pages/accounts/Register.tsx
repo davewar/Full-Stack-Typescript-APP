@@ -7,27 +7,30 @@ import { emailRegEx } from '../../utils/helpers';
 import { UserContext } from '../../contexts/user';
 
 const Register = () => {
-	const [name, setName] = useState('');
-	const [nameErr, setNameErr] = useState('');
+	const [name, setName] = useState<string>('');
+	const [nameErr, setNameErr] = useState<string>('');
 
-	const [email, setEmail] = useState('');
-	const [emailErr, setEmailErr] = useState('');
-	const [password, setPassword] = useState('');
-	const [passwordErr, setPasswordErr] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [passwordErr, setPasswordErr] = useState<string>('');
 
-	const [password2, setPassword2] = useState('');
-	const [passwordErr2, setPasswordErr2] = useState('');
+	const [password2, setPassword2] = useState<string>('');
+	const [passwordErr2, setPasswordErr2] = useState<string>('');
 	/* eslint-disable */
 
-	const [signInErr, setSignInErr] = useState('');
-	const [success, setSuccess] = useState('');
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 	//password visable
-	const [visable, setVisable] = useState('false');
-	const [visable2, setVisable2] = useState('false');
+	const [visable, setVisable] = useState<boolean>(false);
+	const [visable2, setVisable2] = useState<boolean>(false);
 
 	const { accessToken } = useContext(UserContext); //global user
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: string
+	) => {
 		//clear
 		setSignInErr('');
 
@@ -74,7 +77,7 @@ const Register = () => {
 		}
 	};
 
-	const handleSignin = async (e) => {
+	const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (
@@ -96,7 +99,7 @@ const Register = () => {
 					headers: {
 						'Content-Type': 'application/json',
 						credentials: 'include',
-						headers: { Authorization: `Bearer ${accessToken}` },
+						Authorization: `Bearer ${accessToken}`,
 					},
 				});
 
@@ -114,13 +117,17 @@ const Register = () => {
 					}
 				}
 			} catch (err) {
-				console.log('dw error message register:', err.message);
+				if (err instanceof Error)
+					console.log('dw error message register:', err.message);
 				setSignInErr('No Server Response');
 			}
 		}
 	};
 	//toggle password
-	const toggleType = (e, name) => {
+	const toggleType = (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		name: string
+	) => {
 		if (name === 'password') {
 			setVisable((prev) => !prev);
 		} else {

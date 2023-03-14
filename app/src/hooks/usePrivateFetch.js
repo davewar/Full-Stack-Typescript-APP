@@ -1,9 +1,8 @@
 import useRefreshToken from './useRefreshToken';
+import { baseUrl } from '../constants/roles';
 
 const usePrivateFetch = () => {
 	let refresh = useRefreshToken();
-
-	let baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 	let originalFetch = async (url, options) => {
 		let response = await fetch(`${baseUrl}${url}`, options);

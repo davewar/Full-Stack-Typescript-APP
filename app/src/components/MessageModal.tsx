@@ -1,8 +1,21 @@
-import React from 'react';
 import './messageModal.css';
 import { RiCloseLine } from 'react-icons/ri';
 
-const MessageModal = (props) => {
+type DataObjProp = {
+	header: string;
+	desc: string;
+	buttonDesc: string;
+	buttonType: string;
+};
+
+type ModalProps = {
+	dataObj: DataObjProp;
+	closeModal: () => void;
+	deleteItem: () => void;
+};
+
+const MessageModal = (props: ModalProps) => {
+	console.log(props);
 	return (
 		<>
 			<div className='centered'>

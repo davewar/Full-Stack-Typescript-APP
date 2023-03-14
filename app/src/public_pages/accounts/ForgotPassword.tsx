@@ -4,17 +4,20 @@ import './login.css';
 import { emailRegEx } from '../../utils/helpers';
 
 const ForgotPassword = () => {
-	const [email, setEmail] = useState('');
-	const [emailErr, setEmailErr] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
 
 	/* eslint-disable */
 
-	const [signInErr, setSignInErr] = useState('');
-	const [success, setSuccess] = useState('');
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 
 	const navigate = useNavigate();
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: string
+	) => {
 		//clear
 		setSignInErr('');
 
@@ -26,7 +29,7 @@ const ForgotPassword = () => {
 		}
 	};
 
-	const handleSignin = async (e) => {
+	const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (email && !emailErr) {
@@ -52,7 +55,8 @@ const ForgotPassword = () => {
 					setEmail('');
 				}
 			} catch (err) {
-				console.log('dw error message forgot pw:', err.message);
+				if (err instanceof Error)
+					console.log('dw error message forgot pw:', err.message);
 				setSignInErr('No Server Response');
 			}
 		}

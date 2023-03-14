@@ -2,7 +2,30 @@ import React, { useState } from 'react';
 import './editUser.css';
 import { ROLES } from '../../constants/roles';
 
-const EditUser = (props) => {
+type updateUserProp = {
+	role: number;
+	active: string;
+	validated: string;
+};
+
+type dataProp = {
+	active: string;
+	createdAt: string;
+	email: string;
+	name: string;
+	role: number;
+	updatedAt: string;
+	validated: string;
+	_id: string;
+};
+
+type UserEditProps = {
+	data: dataProp;
+	handleEditUser: (id: string, updateUser: updateUserProp) => void;
+	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const EditUser = (props: UserEditProps) => {
 	const [active, setActive] = useState(props.data.active);
 	const [role, setRole] = useState(props.data.role);
 	const [email] = useState(props.data.email);
@@ -10,7 +33,7 @@ const EditUser = (props) => {
 	const [validated, setValidated] = useState(props.data.validated);
 	const [_id] = useState(props.data._id);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// update user
@@ -39,7 +62,7 @@ const EditUser = (props) => {
 				onSubmit={handleSubmit}
 			>
 				<div className='user-row'>
-					<label htmlFor='id' type='text' className='user-label'>
+					<label htmlFor='id' className='user-label'>
 						Id:
 					</label>
 					<input
@@ -53,7 +76,7 @@ const EditUser = (props) => {
 					/>
 				</div>
 				<div className='user-row'>
-					<label htmlFor='name' type='text' className='user-label'>
+					<label htmlFor='name' className='user-label'>
 						Name:
 					</label>
 					<input
@@ -67,7 +90,7 @@ const EditUser = (props) => {
 					/>
 				</div>
 				<div className='user-row'>
-					<label htmlFor='email' type='email' className='user-label'>
+					<label htmlFor='email' className='user-label'>
 						Email:
 					</label>
 					<input
@@ -81,28 +104,26 @@ const EditUser = (props) => {
 					/>
 				</div>
 				<div className='user-row'>
-					<label htmlFor='role' type='text' className='user-label'>
+					<label htmlFor='role' className='user-label'>
 						Role:
 					</label>
 					<select
-						type='text'
 						name='role'
 						className='user-data'
 						id='role'
 						value={role}
-						onChange={(e) => {
-							setRole(e.target.value);
+						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+							setRole(parseInt(e.target.value));
 						}}
 					>
 						{roleOptions}
 					</select>
 				</div>
 				<div className='user-row'>
-					<label htmlFor='validated' type='text' className='user-label'>
+					<label htmlFor='validated' className='user-label'>
 						Validated:
 					</label>
 					<select
-						type='text'
 						name='validated'
 						className='user-data'
 						id='validated'
@@ -116,11 +137,10 @@ const EditUser = (props) => {
 					</select>
 				</div>
 				<div className='user-row'>
-					<label htmlFor='active' type='text' className='user-label'>
+					<label htmlFor='active' className='user-label'>
 						Status:
 					</label>
 					<select
-						type='text'
 						name='active'
 						className='user-data'
 						id='active'
