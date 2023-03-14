@@ -13,7 +13,7 @@ const activeStyles = {
 };
 
 const Navbar = () => {
-	const location = useLocation(null);
+	const location = useLocation();
 
 	const { isLogged, logUserOut } = useContext(UserContext);
 
@@ -27,7 +27,7 @@ const Navbar = () => {
 					<div className=''>
 						{!isLogged ? (
 							<NavLink
-								style={({ isActive }) => (isActive ? activeStyles : null)}
+								style={({ isActive }) => (isActive ? activeStyles : {})}
 								className='link-item underline'
 								to={Paths.LOGINPATH}
 							>

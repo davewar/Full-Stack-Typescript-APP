@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
 		setSuccess('');
 
 		if (name && email && comment && !nameErr && !emailErr && !commentErr) {
-			let url = '/api/email/';
+			let url: string = '/api/email/';
 
 			let options = {
 				method: 'POST',
