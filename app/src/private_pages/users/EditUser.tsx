@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import './editUser.css';
 import { ROLES } from '../../constants/roles';
 
-type updateUserProp = {
-	role: number;
-	active: string;
-	validated: string;
-};
+import { updateUserProp } from './sharedProps';
 
 type dataProp = {
 	active: string;

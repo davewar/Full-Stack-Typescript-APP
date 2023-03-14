@@ -7,23 +7,7 @@ import User from './User';
 import MessageModal from '../../components/MessageModal';
 import { useNavigate } from 'react-router-dom';
 
-type updateUserProp = {
-	role: number;
-	active: string;
-	validated: string;
-};
-
-type UserProps = {
-	IncorrectPW: number;
-	active: string;
-	createdAt: string;
-	email: string;
-	name: string;
-	role: number;
-	updatedAt: string;
-	validated: string;
-	_id: string;
-};
+import { UserProps, updateUserProp } from './sharedProps';
 
 type DataObjProp = {
 	header: string;

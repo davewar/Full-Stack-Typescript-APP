@@ -2,33 +2,29 @@ import { useState, useContext } from 'react';
 import EditUser from './EditUser';
 import { UserContext } from '../../contexts/user';
 
-type updateUserProp = {
-	role: number;
-	active: string;
-	validated: string;
-};
+import { SingleUserProps } from './sharedProps';
 
-type UserProps = {
-	IncorrectPW: number;
-	active: string;
-	createdAt: string;
-	email: string;
-	name: string;
-	role: number;
-	updatedAt: string;
-	validated: string;
-	_id: string;
-	deleteItem: () => void;
-	getIdDelete: (id: string) => void;
-	handleEditUser: (id: string, updateUser: updateUserProp) => void;
-	setErrors: React.Dispatch<React.SetStateAction<string>>;
-	setFail: React.Dispatch<React.SetStateAction<string>>;
-	setShow: React.Dispatch<React.SetStateAction<boolean>>;
-	setSuccess: React.Dispatch<React.SetStateAction<string>>;
-	show: boolean;
-};
+// type SingleUserProps = {
+// 	IncorrectPW: number;
+// 	active: string;
+// 	createdAt: string;
+// 	email: string;
+// 	name: string;
+// 	role: number;
+// 	updatedAt: string;
+// 	validated: string;
+// 	_id: string;
+// 	deleteItem: () => void;
+// 	getIdDelete: (id: string) => void;
+// 	handleEditUser: (id: string, updateUser: updateUserProp) => void;
+// 	setErrors: React.Dispatch<React.SetStateAction<string>>;
+// 	setFail: React.Dispatch<React.SetStateAction<string>>;
+// 	setShow: React.Dispatch<React.SetStateAction<boolean>>;
+// 	setSuccess: React.Dispatch<React.SetStateAction<string>>;
+// 	show: boolean;
+// };
 
-const User = (props: UserProps) => {
+const User = (props: SingleUserProps) => {
 	const [showModal, setShowModal] = useState(false);
 	const { isAdmin, isEditor } = useContext(UserContext);
 

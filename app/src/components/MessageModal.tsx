@@ -15,7 +15,6 @@ type ModalProps = {
 };
 
 const MessageModal = (props: ModalProps) => {
-	console.log(props);
 	return (
 		<>
 			<div className='centered'>
