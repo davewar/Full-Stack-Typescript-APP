@@ -1,4 +1,15 @@
-export const metaData = [
+type MetaDataProp = {
+	id: number;
+	page: string;
+	image: string;
+	title: string;
+	description: string;
+	name: string;
+	type: string;
+	url: string;
+};
+
+export const metaData: Array<MetaDataProp> = [
 	{
 		id: 1,
 		page: '/',

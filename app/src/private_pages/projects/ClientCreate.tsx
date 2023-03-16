@@ -1,60 +1,61 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { UserContext } from '../../contexts/user';
-
+import usePrivateFetch from '../../hooks/usePrivateFetch';
 import '../../public_pages/accounts/login.css';
 
-import { emailRegEx } from '../../utils/helpers';
+import { emailRegEx, scrollToTop } from '../../utils/helpers';
 
-const Customer = ({ customer, ...rest }) => {
-	const [id] = useState(customer[0]._id);
-	const [name, setName] = useState(customer[0].name);
-	const [nameErr, setNameErr] = useState('');
+import { Address } from '../models/customerPropTypes';
 
-	const [businessName, setBusinessName] = useState(
-		customer[0].businessName ? customer[0].businessName : ''
-	);
+const ClientCreate = () => {
+	const [name, setName] = useState<string>('');
+	const [nameErr, setNameErr] = useState<string>('');
 
-	const [email, setEmail] = useState(customer[0].email);
-	const [emailErr, setEmailErr] = useState('');
+	const [businessName, setBusinessName] = useState<string>('');
 
-	const [telephone, setTelephone] = useState(customer[0].telephone);
-	const [telephoneErr, setTelephoneErr] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [emailErr, setEmailErr] = useState<string>('');
 
-	const [address, setAddress] = useState({
-		addressLine1: customer[0].address.addressLine1,
-		addressLine2: customer[0].address.addressLine2,
-		addressLine3: customer[0].address.addressLine3,
-		town: customer[0].address.town,
-		county: customer[0].address.county,
-		postcode: customer[0].address.postcode,
+	const [telephone, setTelephone] = useState<string>('');
+	const [telephoneErr, setTelephoneErr] = useState<string>('');
+
+	const [address, setAddress] = useState<Address>({
+		addressLine1: '',
+		addressLine2: '',
+		addressLine3: '',
+		town: '',
+		county: '',
+		postcode: '',
 	});
-	const [addressErr, setAddressErr] = useState('');
-	const [postcodeErr, setPostcodeErr] = useState('');
-	const [townErr, setTownErr] = useState('');
+	const [addressErr, setAddressErr] = useState<string>('');
+	const [postcodeErr, setPostcodeErr] = useState<string>('');
+	const [townErr, setTownErr] = useState<string>('');
 
-	const { isEditor, isAdmin } = useContext(UserContext); //global user
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 
-	let toTop = () => {
-		window.scrollTo(0, 0);
-	};
+	const { accessToken, user } = useContext(UserContext); //global user
 
-	useEffect(() => {
-		toTop();
-	}, [customer]);
+	let { callFetch } = usePrivateFetch();
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: string
+	) => {
 		//clear
-		rest.setSignInErr('');
-		rest.setSuccess('');
+		setSignInErr('');
+		setSuccess('');
 
 		if (item === 'name') {
 			setName(e.target.value);
-			e.target.value.length < 3
-				? setNameErr('Name must be at least 3 characters!')
+			e.target.value.length < 6
+				? setNameErr('Name must be at least 6 characters!')
 				: setNameErr('');
 		}
 
 		if (item === 'email') {
+			if (emailErr) setEmailErr('');
+
 			setEmail(e.target.value);
 			!emailRegEx.test(e.target.value)
 				? setEmailErr('Invalid Email!')
@@ -74,6 +75,10 @@ const Customer = ({ customer, ...rest }) => {
 			setBusinessName(e.target.value);
 		}
 		if (item === 'address') {
+			if (e.target.name === 'addressLine1') setAddressErr('');
+			if (e.target.name === 'town') setTownErr('');
+			if (e.target.name === 'postcode') setPostcodeErr('');
+
 			setAddress((prev) => {
 				return {
 					...prev,
@@ -83,11 +88,12 @@ const Customer = ({ customer, ...rest }) => {
 		}
 
 		if (item === 'telephone') {
+			setTelephoneErr('');
 			setTelephone(e.target.value);
 		}
 	};
 
-	const handleSignin = async (e) => {
+	const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (
@@ -123,27 +129,83 @@ const Customer = ({ customer, ...rest }) => {
 			!postcodeErr &&
 			!townErr
 		) {
-			let updateCustomer = {
-				name,
-				email,
-				address,
-				telephone,
-				businessName,
+			setSuccess('');
+			setSignInErr('');
+
+			let createUrl = `/api/customer/create`;
+			let createOptions = {
+				method: 'POST',
+				body: JSON.stringify({
+					name,
+					email,
+					address,
+					telephone,
+					businessName,
+					createdBy: user,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					credentials: 'include',
+					Authorization: `Bearer ${accessToken}`,
+				},
 			};
 
-			rest.handleUpdateCustomer(e, id, updateCustomer);
-			toTop();
+			try {
+				let { data, response } = await callFetch(createUrl, createOptions);
+
+				if (data.errors) {
+					if (response.status === 403) {
+						//redirect to be added
+
+						setSignInErr(data.errors);
+					} else {
+						setSignInErr(data.errors);
+					}
+				} else if (data.msg) {
+					setSuccess(data.msg);
+					setName('');
+					setEmail('');
+					setBusinessName('');
+					setTelephone('');
+					setAddress({
+						addressLine1: '',
+						addressLine2: '',
+						addressLine3: '',
+						town: '',
+						county: '',
+						postcode: '',
+					});
+
+					scrollToTop();
+				}
+			} catch (err) {
+				console.log('dw create customer ', err);
+				setSignInErr('No Server Response');
+			}
 		}
 	};
 
 	return (
 		<>
 			<div className='sign-in create-customer'>
+				<h2 className='text-center'>Create New Customer</h2>
+
+				{signInErr && (
+					<div className='alert alert-danger text-center'>
+						<span className='text-danger text-capitalize'>{signInErr}</span>
+					</div>
+				)}
+
+				{success && (
+					<div className='alert alert-success text-center'>
+						<span className='text-success text-capitalize'>{success}</span>
+					</div>
+				)}
 				<form onSubmit={handleSignin}>
 					<div className='form-group'>
 						<label htmlFor='name'>Customer Name</label>
 						<input
-							type='text'
+							type='name'
 							required
 							autoComplete='off'
 							name='name'
@@ -286,28 +348,14 @@ const Customer = ({ customer, ...rest }) => {
 						</div>
 					</div>
 					<br />
-					<div id='customer-edit'>
-						{(isEditor || isAdmin) && (
-							<button
-								type='button'
-								className='btn btn-blue'
-								id='btn-delete'
-								onClick={(e) => {
-									rest.handleDeleteCustomer(e, id);
-									toTop();
-								}}
-							>
-								Delete
-							</button>
-						)}
-						<button type='submit' className='btn btn-blue' id='btn-save'>
-							Save
-						</button>
-					</div>
+
+					<button type='submit' className='btn btn-blue' id='btn-save'>
+						Create
+					</button>
 				</form>
 			</div>
 		</>
 	);
 };
 
-export default Customer;
+export default ClientCreate;

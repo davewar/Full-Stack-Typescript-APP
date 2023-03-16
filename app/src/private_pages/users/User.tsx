@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import EditUser from './EditUser';
 import { UserContext } from '../../contexts/user';
 
-import { SingleUserProps } from './sharedProps';
+import { SingleUserProps } from '../models/usersPropTypes';
 
 // type SingleUserProps = {
 // 	IncorrectPW: number;

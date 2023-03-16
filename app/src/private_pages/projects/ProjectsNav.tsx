@@ -7,7 +7,11 @@ const activeStyles = {
 	color: '#0000eb',
 };
 
-const ProjectsNav = ({ children }) => {
+type ChildrenProp = {
+	children: React.ReactNode;
+};
+
+const ProjectsNav = ({ children }: ChildrenProp) => {
 	return (
 		<div id='project'>
 			<div className='main-container'>
@@ -17,7 +21,7 @@ const ProjectsNav = ({ children }) => {
 							className='link-item underline'
 							to='/projects/all'
 							aria-label='link to all projects page'
-							style={({ isActive }) => (isActive ? activeStyles : null)}
+							style={({ isActive }) => (isActive ? activeStyles : {})}
 						>
 							All Projects
 						</NavLink>
@@ -27,7 +31,7 @@ const ProjectsNav = ({ children }) => {
 							className='link-item underline'
 							to='/projects/create'
 							aria-label='link to create project page'
-							style={({ isActive }) => (isActive ? activeStyles : null)}
+							style={({ isActive }) => (isActive ? activeStyles : {})}
 						>
 							Create Project
 						</NavLink>
@@ -37,7 +41,7 @@ const ProjectsNav = ({ children }) => {
 							className='link-item underline'
 							to='/projects/customer_create'
 							aria-label='link to create client page'
-							style={({ isActive }) => (isActive ? activeStyles : null)}
+							style={({ isActive }) => (isActive ? activeStyles : {})}
 						>
 							Create Customer
 						</NavLink>
@@ -47,7 +51,7 @@ const ProjectsNav = ({ children }) => {
 							className='link-item underline'
 							to='/projects/customer_amend'
 							aria-label='link to amend client page'
-							style={({ isActive }) => (isActive ? activeStyles : null)}
+							style={({ isActive }) => (isActive ? activeStyles : {})}
 						>
 							Amend Customer
 						</NavLink>

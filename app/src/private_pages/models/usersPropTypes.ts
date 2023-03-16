@@ -1,3 +1,6 @@
+// Userlist > User  (Edit btn - opens EditUser compo)
+// create new user = Register compo
+
 export type updateUserProp = {
 	role: number;
 	active: string;

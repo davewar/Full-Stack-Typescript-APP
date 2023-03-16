@@ -6,7 +6,7 @@ import Email from './Email';
 import './emails.css';
 import MessageModal from '../../components/MessageModal';
 
-type EmailObjProp = {
+export type EmailObjProp = {
 	_id: string;
 	comment: string;
 	createdAt: string;

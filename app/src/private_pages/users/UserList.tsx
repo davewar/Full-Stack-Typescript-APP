@@ -7,7 +7,7 @@ import User from './User';
 import MessageModal from '../../components/MessageModal';
 import { useNavigate } from 'react-router-dom';
 
-import { UserProps, updateUserProp } from './sharedProps';
+import { UserProps, updateUserProp } from '../models/usersPropTypes';
 
 type DataObjProp = {
 	header: string;

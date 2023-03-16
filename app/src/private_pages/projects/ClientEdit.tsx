@@ -1,17 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 import Customer from './Customer';
+import {
+	updateCustomerProps,
+	CustomerProps,
+} from '../models/customerPropTypes';
 
 import { scrollToTop } from '../../utils/helpers';
 
 const ClientEdit = () => {
-	const [customers, setCustomers] = useState([]);
+	const [customers, setCustomers] = useState<CustomerProps[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState('');
 	const [customerSelected, setCustomerSelected] = useState('');
-	const [customer, setCustomer] = useState({});
+	const [customer, setCustomer] = useState<CustomerProps[]>([]);
 
 	const [signInErr, setSignInErr] = useState('');
 	const [success, setSuccess] = useState('');
@@ -49,7 +53,7 @@ const ClientEdit = () => {
 					}
 				}
 			} catch (err) {
-				console.log('dw email ', err.message);
+				if (err instanceof Error) console.log('dw email ', err.message);
 				setLoading(false);
 				setErrors('No Server Response');
 			}
@@ -59,12 +63,12 @@ const ClientEdit = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	const handleCustomer = (e) => {
+	const handleCustomer = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSuccess('');
 		setSignInErr('');
 		if (e.target.value === 'Please select customer') {
 			setCustomerSelected(e.target.value);
-			setCustomer({});
+			setCustomer([]);
 			return;
 		} else {
 			// eslint-disable-next-line
@@ -79,7 +83,11 @@ const ClientEdit = () => {
 		}
 	};
 
-	const handleUpdateCustomer = async (e, id, updateCustomer) => {
+	const handleUpdateCustomer = async (
+		e: React.FormEvent<HTMLFormElement>,
+		id: string,
+		updateCustomer: updateCustomerProps
+	) => {
 		e.preventDefault();
 		setSuccess('');
 		setSignInErr('');
@@ -111,22 +119,25 @@ const ClientEdit = () => {
 			} else if (data.msg) {
 				setSuccess(data.msg);
 
-				// updatestate
-				let newlist = customers.map((item) => {
-					if (item._id === id) {
-						return { _id: id, ...updateCustomer };
-					}
-					return item;
+				setCustomer((prev) => {
+					return prev.map((item) => {
+						if (item._id === id) {
+							return { ...item, ...updateCustomer };
+						}
+						return item;
+					});
 				});
-				setCustomers(newlist);
 			}
 		} catch (err) {
-			console.log('dw create customer ', err);
+			if (err instanceof Error) console.log('dw create customer ', err);
 			setSignInErr('No Server Response');
 		}
 	};
 
-	const handleDeleteCustomer = async (e, id) => {
+	const handleDeleteCustomer = async (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		id: string
+	) => {
 		e.preventDefault();
 		setSuccess('');
 		setSignInErr('');
@@ -169,7 +180,7 @@ const ClientEdit = () => {
 				// }
 			}
 		} catch (err) {
-			console.log('dw create customer ', err);
+			if (err instanceof Error) console.log('dw create customer ', err);
 			setSignInErr('No Server Response');
 		}
 	};
