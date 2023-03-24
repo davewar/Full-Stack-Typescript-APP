@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { scrollToTop } from '../../utils/helpers';
 
-const Project = (props) => {
+import { CreateProjectProps } from '../models/usersPropTypes';
+
+const Project = (props: CreateProjectProps) => {
 	const { accessToken, user } = useContext(UserContext); //global user
 
 	// add project to customer profile
@@ -23,7 +25,7 @@ const Project = (props) => {
 	const [title, setTitle] = useState('');
 	const [titleErr, setTitleErr] = useState('');
 	//excel , access. bi, web
-	const [type, setType] = useState([]);
+	const [type, setType] = useState<string[]>([]);
 	const [typeErr, setTypeErr] = useState('');
 	//project requirements
 	const [description, setDescription] = useState('');
@@ -51,7 +53,13 @@ const Project = (props) => {
 
 	let { callFetch } = usePrivateFetch();
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLSelectElement>
+			| React.ChangeEvent<HTMLTextAreaElement>,
+		item: string
+	) => {
 		//clear
 		setSignInErr('');
 		setSuccess('');
@@ -62,8 +70,9 @@ const Project = (props) => {
 			setTitle(e.target.value);
 			e.target.value.length === 0 ? setTitleErr(err) : setTitleErr('');
 		} else if (item === 'type') {
-			let values = Array.from(
-				e.target.selectedOptions,
+			let event = e.target as HTMLSelectElement;
+			let values: string[] = Array.from(
+				event.selectedOptions,
 				(option) => option.value
 			);
 			setType(values);
@@ -83,7 +92,7 @@ const Project = (props) => {
 		}
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		let err = '';
 		let dte = new Date().toLocaleString().replace(',', '');
@@ -238,12 +247,10 @@ const Project = (props) => {
 					</div>
 
 					<div className='form-group'>
-						<label htmlFor='description' type='text'>
-							Project Requirements
-						</label>
+						<label htmlFor='description'>Project Requirements</label>
 						<textarea
-							rows='4'
-							cols='50'
+							rows={4}
+							cols={50}
 							name='description'
 							autoComplete='off'
 							value={description}
@@ -256,12 +263,10 @@ const Project = (props) => {
 					</div>
 
 					<div className='form-group'>
-						<label htmlFor='comments' type='text'>
-							User Comments
-						</label>
+						<label htmlFor='comments'>User Comments</label>
 						<textarea
-							rows='4'
-							cols='50'
+							rows={4}
+							cols={50}
 							name='comments'
 							autoComplete='off'
 							value={comments}

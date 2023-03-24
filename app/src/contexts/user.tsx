@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { baseUrl } from '../constants/roles';
 
 type UserContextType = {
 	user: string | null;
@@ -39,7 +40,7 @@ const UserProvider = ({
 	const logUserOut = async (): Promise<void> => {
 		try {
 			//remove cookie
-			await fetch('user/logout');
+			await fetch(`${baseUrl}/user/logout`);
 			//remove local storage
 			localStorage.removeItem('firstlogin');
 			// reset state
@@ -60,7 +61,7 @@ const UserProvider = ({
 		if (accessToken) {
 			const getUser = async () => {
 				try {
-					const res = await fetch('/user/infor', {
+					const res = await fetch(`${baseUrl}/user/infor`, {
 						headers: { Authorization: `Bearer ${accessToken}` },
 					});
 

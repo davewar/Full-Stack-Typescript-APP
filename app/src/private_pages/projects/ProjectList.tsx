@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 import SearchForm from './SearchForm';
 
 import ProjectListItem from './ProjectListItem';
 
 import MessageModal from '../../components/MessageModal';
 
+import { ProjectProps } from '../models/projectPropTypes';
+
 const ProjectList = () => {
-	const [projects, setProjects] = useState([]);
+	const [projects, setProjects] = useState<ProjectProps[]>([]);
 	const [search, setSearch] = useState('');
 	const [radio, setRadio] = useState('all');
 	const [paidRadio, setPaidRadio] = useState('all');
@@ -22,9 +24,9 @@ const ProjectList = () => {
 	const [deleteShow, setDeleteShow] = useState(false); //delete message box
 	const [deleteId, setDeleteId] = useState('');
 
-	let filteredData = [];
-	let filter = '';
-	let filter2 = '';
+	let filteredData: ProjectProps[] = [];
+	let filter: string | Boolean = '';
+	let filter2: string | boolean = '';
 
 	const { accessToken } = useContext(UserContext); //global user
 
@@ -50,7 +52,7 @@ const ProjectList = () => {
 						setErrors('');
 					} else {
 						// sort by customer email address
-						let sortedData = data.msg.sort((a, b) =>
+						let sortedData = data.msg.sort((a: any, b: any) =>
 							a.customerID < b.customerID ? -1 : 1
 						);
 
@@ -60,7 +62,7 @@ const ProjectList = () => {
 					}
 				}
 			} catch (err) {
-				console.log('dw email ', err.message);
+				if (err instanceof Error) console.log('dw email ', err.message);
 				setLoading(false);
 				setErrors('No Server Response');
 			}
@@ -81,7 +83,7 @@ const ProjectList = () => {
 					item.createdBy.toLowerCase().includes(search.toLowerCase()) ||
 					item.description[0].toLowerCase().includes(search.toLowerCase()) ||
 					item.assignedTo.toLowerCase().includes(search.toLowerCase()) ||
-					item.customerID.toLowerCase().includes(search.toLowerCase()) ||
+					item.customerID!.toLowerCase().includes(search.toLowerCase()) ||
 					item.lastUpdatedBy.toLowerCase().includes(search.toLowerCase())
 				);
 			});
@@ -173,19 +175,21 @@ const ProjectList = () => {
 				setDeleteId('');
 			}
 		} catch (err) {
-			console.log('dw email ', err.message);
+			if (err instanceof Error) {
+				console.log('dw email ', err.message);
+			}
 			setErrors('No Server Response');
 			setDeleteShow(false); //close modal
 		}
 	};
 
-	const getIdDelete = (id) => {
+	const getIdDelete = (id: string) => {
 		setDeleteId(id);
 		setDeleteShow(true); // show modal
 	};
 
 	// user chosen not to delete email, clear state & close modal
-	const closeModal = (id) => {
+	const closeModal = () => {
 		setDeleteId('');
 		setDeleteShow(false);
 	};

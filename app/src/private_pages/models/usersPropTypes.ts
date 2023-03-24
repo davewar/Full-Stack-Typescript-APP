@@ -29,3 +29,14 @@ export type SingleUserProps = UserProps & {
 	setSuccess: React.Dispatch<React.SetStateAction<string>>;
 	show: boolean;
 };
+
+export type User = {
+	email: string;
+	name: string;
+	_id: string;
+};
+
+export type CreateProjectProps = {
+	employeeSelected: string;
+	customerSelected: string;
+};

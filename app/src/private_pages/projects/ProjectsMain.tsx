@@ -5,11 +5,10 @@ import GoToTop from '../../components/GoToTop';
 import './projects.css';
 
 const Projects = () => {
-	//fetch all projects
-
 	return (
 		<div id='project-page'>
 			<GoToTop />
+
 			<ProjectsNav />
 
 			<div className='main-container'>

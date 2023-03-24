@@ -3,25 +3,15 @@
 
 // Projectlist
 export type CommentsTypes = {
-	id: number;
+	id: string;
 	comments: string;
 	dte: string;
 	createdBy: string;
 };
 
 // Projectlist
-export type productItem =
-	| [0, 'Excel']
-	| [1, 'Access']
-	| [2, 'Website']
-	| [3, 'BI'];
-
-// Projectlist
-export type ProjectTypes = productItem[];
-
-// Projectlist
 export type Payments = {
-	id: number;
+	id: string;
 	paidAmount: string;
 	paymentDate: string;
 	createdBy: string;
@@ -34,24 +24,33 @@ export type ProjectProps = {
 	comments: CommentsTypes[];
 	createdAt: string;
 	createdBy: string;
-	customerID: string;
+	customerID?: string;
 	description: string;
 	lastUpdatedBy: string;
 	paid: boolean;
 	payments: Payments[];
 	price: string;
-	projectCompleted: string;
+	projectCompleted: boolean;
 	title: string;
-	type: ProjectTypes;
+	type: string[];
 	updatedAt: string;
 	_id: string;
 };
 
 // ProjectList > feeds > Projectitem
-export type ProductListItemProps = {
+export type ProjectListItemProps = {
 	obj: ProjectProps;
 	deleteItem: () => Promise<void>;
 	getIdDelete: (id: string) => void;
 };
 
-// Project
+// Searchform
+
+export type SearchFormProps = {
+	search: string;
+	setSearch: React.Dispatch<React.SetStateAction<string>>;
+	radio: string;
+	setRadio: React.Dispatch<React.SetStateAction<string>>;
+	paidRadio: string;
+	setPaidRadio: React.Dispatch<React.SetStateAction<string>>;
+};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Pages from './pages/Pages';
-import Loading from './components/Loading.tsx';
+import Loading from './components/Loading';
 
 import useRefreshToken from './hooks/useRefreshToken';
 
@@ -11,12 +11,12 @@ function App() {
 
 	let refresh = useRefreshToken();
 
-	useEffect(() => {
+	useEffect((): void => {
 		setLoading(false);
 	}, []);
 
 	useEffect(() => {
-		const firstLogin = localStorage.getItem('firstlogin');
+		const firstLogin: string | null = localStorage.getItem('firstlogin');
 
 		if (firstLogin) {
 			const refreshToken = async () => {

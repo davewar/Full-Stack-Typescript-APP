@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { metaData } from '../../constants/metaData';
-import Seo from '../../components/seo/Seo';
+import Seo from './Seo';
 
 const PageSeo = () => {
 	const [seoPage, setSeoPage] = useState('./');
 
-	let location = useLocation(null);
+	let location = useLocation();
 
 	useEffect(() => {
 		let newSeoPath = location.pathname;

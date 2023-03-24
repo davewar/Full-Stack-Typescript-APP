@@ -11,7 +11,7 @@ export type Address = {
 	postcode: string;
 };
 
-//Customer + CustomerEdit component props
+//Customer + CustomerEdit component props + ProjectCreate
 export type CustomerProps = {
 	name: string;
 	businessName: string;

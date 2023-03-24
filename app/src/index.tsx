@@ -9,7 +9,9 @@ import { disableReactDevTools } from '@fvilers/disable-react-devtools'; //disabl
 
 if (process.env.REACT_APP_NODE_ENV === 'production') disableReactDevTools();
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+	document.getElementById('root') as HTMLElement
+);
 root.render(
 	<React.StrictMode>
 		<UserProvider>

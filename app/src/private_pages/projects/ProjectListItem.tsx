@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/user';
 
-const ProjectListItem = (props) => {
+import { ProjectListItemProps } from '../models/projectPropTypes';
+
+const ProjectListItem = (props: ProjectListItemProps) => {
 	let {
 		title,
 		projectCompleted,

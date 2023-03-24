@@ -7,11 +7,12 @@ const activeStyles = {
 	color: '#0000eb',
 };
 
-type ChildrenProp = {
-	children: React.ReactNode;
-};
+// type ChildrenProp = {
+// 	children: React.ReactNode;
+// };
 
-const ProjectsNav = ({ children }: ChildrenProp) => {
+// const ProjectsNav = ({ children }: ChildrenProp) => {
+const ProjectsNav = () => {
 	return (
 		<div id='project'>
 			<div className='main-container'>

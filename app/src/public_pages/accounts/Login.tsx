@@ -6,8 +6,6 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { AiOutlineEyeInvisible } from 'react-icons/ai';
 import { emailRegEx } from '../../utils/helpers';
 
-import { baseUrl } from '../../constants/roles';
-
 const Login = () => {
 	const { setAccessToken, setRole } = useContext(UserContext); //global user
 	// const currentuser = useContext(UserContext); //global user
@@ -69,7 +67,7 @@ const Login = () => {
 			setSignInErr('');
 
 			try {
-				const res = await fetch(`${baseUrl}/user/login`, {
+				const res = await fetch('/user/login', {
 					// const res = await fetch('/user/login', {
 					method: 'POST',
 					body: JSON.stringify({ email, password }),

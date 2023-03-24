@@ -1,5 +1,6 @@
-import React from 'react';
 import './projects.css';
+
+import { SearchFormProps } from '../models/projectPropTypes';
 
 const SearchForm = ({
 	search,
@@ -8,7 +9,7 @@ const SearchForm = ({
 	setRadio,
 	paidRadio,
 	setPaidRadio,
-}) => {
+}: SearchFormProps) => {
 	return (
 		<>
 			<h2 className='text-center'>Search</h2>

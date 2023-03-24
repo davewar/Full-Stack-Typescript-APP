@@ -1,4 +1,4 @@
-type RolesProp = {
+export type RolesProp = {
 	User: number;
 	Editor: number;
 	Admin: number;

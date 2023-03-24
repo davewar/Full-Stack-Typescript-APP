@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 import { useParams } from 'react-router-dom';
 import { Products } from '../../constants/products';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,29 +11,37 @@ import { scrollToTop } from '../../utils/helpers';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { ProjectProps } from '../models/projectPropTypes';
+
+type User = {
+	email: string;
+	name: string;
+	_id: string;
+};
+
 const ProjectAmend = () => {
-	const [project, setProject] = useState({});
+	const [project, setProject] = useState<ProjectProps>({} as ProjectProps);
 
 	const [addShow, setAddShow] = useState(false);
-	const [addComments, setAddComments] = useState('');
+	const [addComments, setAddComments] = useState<string>('');
 
-	const [users, setUsers] = useState([]);
-	const [userErrors, setUserErrors] = useState('');
+	const [users, setUsers] = useState<User[]>([]);
+	const [userErrors, setUserErrors] = useState<string>('');
 
 	const [loading, setLoading] = useState(true);
-	const [errors, setErrors] = useState('');
+	const [errors, setErrors] = useState<string>('');
 
-	const [signInErr, setSignInErr] = useState('');
-	const [success, setSuccess] = useState('');
+	const [signInErr, setSignInErr] = useState<string>('');
+	const [success, setSuccess] = useState<string>('');
 
 	const { id } = useParams();
 
 	// form
-	const [titleErr, setTitleErr] = useState('');
-	const [typeErr, setTypeErr] = useState('');
-	const [descriptionErr, setDescriptionErr] = useState('');
-	const [commentsErr, setCommentsErr] = useState('');
-	const [priceErr, setPriceErr] = useState('');
+	const [titleErr, setTitleErr] = useState<string>('');
+	const [typeErr, setTypeErr] = useState<string>('');
+	const [descriptionErr, setDescriptionErr] = useState<string>('');
+	const [commentsErr, setCommentsErr] = useState<string>('');
+	const [priceErr, setPriceErr] = useState<string>('');
 
 	// types of products
 	const productOptions = Products.map((item) => {
@@ -45,9 +53,9 @@ const ProjectAmend = () => {
 	});
 	// add payments
 	const [startDate, setStartDate] = useState(new Date());
-	const [paidAmount, setPaidAmount] = useState('');
+	const [paidAmount, setPaidAmount] = useState('0');
 	const [addPaidShow, setPaidShow] = useState(false);
-	const [outstanding, setOutstanding] = useState('');
+	const [outstanding, setOutstanding] = useState(0);
 
 	const { accessToken, user } = useContext(UserContext); //global user
 
@@ -71,13 +79,13 @@ const ProjectAmend = () => {
 					setErrors(data.errors);
 				} else if (data.msg) {
 					if (data.msg === 'No projects found') {
-						setProject([]);
+						setProject({} as ProjectProps);
 						setLoading(false);
 						setErrors('');
 					} else {
 						let sum = 0.0;
 						// eslint-disable-next-line
-						let paidSofar = data.msg[0].payments.map((i) => {
+						let paidSofar = data.msg[0].payments.map((i: any) => {
 							let num = parseFloat(i.paidAmount);
 							return (sum += num);
 						});
@@ -89,7 +97,7 @@ const ProjectAmend = () => {
 					}
 				}
 			} catch (err) {
-				console.log('dw email ', err.message);
+				if (err instanceof Error) console.log('dw email ', err.message);
 				setLoading(false);
 				setErrors('No Server Response');
 			}
@@ -117,7 +125,7 @@ const ProjectAmend = () => {
 					// let usersList = data.msg.map(({ email, _id, name }) => {
 					// 	return { email, _id, name };
 					// });
-					let usersList = data.msg.map((item) => {
+					let usersList = data.msg.map((item: any) => {
 						return { email: item.email, _id: item._id, name: item.name };
 					});
 
@@ -127,7 +135,7 @@ const ProjectAmend = () => {
 					// setShow(false);
 				}
 			} catch (err) {
-				console.log('dw user ', err);
+				if (err instanceof Error) console.log('dw user ', err);
 				setUserErrors('No Server Response');
 				// setShow(false);
 			}
@@ -137,14 +145,14 @@ const ProjectAmend = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	const handleCommentUpdate = () => {
+	const handleCommentUpdate = (): void => {
 		if (addComments === '') return;
 
 		let newValue = {
 			id: uuidv4(),
 			comments: addComments,
 			dte,
-			createdBy: user,
+			createdBy: user!,
 		};
 		//updatestate
 		setProject((prev) => {
@@ -155,18 +163,18 @@ const ProjectAmend = () => {
 		setAddShow(false);
 	};
 
-	const handlePaidUpdate = () => {
-		if (paidAmount === '') return;
+	const handlePaidUpdate = (): void => {
+		if (paidAmount === '0') return;
 
 		let newValue1 = {
 			id: uuidv4(),
 			paidAmount: paidAmount,
 			paymentDate: startDate.toLocaleString().slice(0, 10),
-			createdBy: user,
+			createdBy: user!,
 		};
 		//updatestate balance o/s
 		setOutstanding((prev) => {
-			return prev - paidAmount;
+			return prev - parseInt(paidAmount);
 		});
 
 		// add extra payment
@@ -174,16 +182,23 @@ const ProjectAmend = () => {
 			return { ...prev, payments: [newValue1, ...prev.payments] };
 		});
 		// clear input field
-		setPaidAmount('');
+		setPaidAmount('0');
 		setPaidShow(false);
 	};
 
-	const handleChange = (e, item) => {
+	const handleChange = (
+		e:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLSelectElement>
+			| React.ChangeEvent<HTMLTextAreaElement>,
+		item: string
+	) => {
 		//clear
 		setSignInErr('');
 		setSuccess('');
 
-		const { name, value, checked } = e.target;
+		// const { name, value, checked } = e.target;
+		const { name, value } = e.target;
 
 		let err = 'Please supply required field';
 
@@ -194,10 +209,8 @@ const ProjectAmend = () => {
 
 			value.length === 0 ? setTitleErr(err) : setTitleErr('');
 		} else if (item === 'type') {
-			let values = Array.from(
-				e.target.selectedOptions,
-				(option) => option.value
-			);
+			let event = e.target as HTMLSelectElement;
+			let values = Array.from(event.selectedOptions, (option) => option.value);
 			setProject((prev) => {
 				return { ...prev, [name]: values };
 			});
@@ -210,16 +223,18 @@ const ProjectAmend = () => {
 		} else if (item === 'comments') {
 			value.length === 0 ? setCommentsErr(err) : setCommentsErr('');
 		} else if (item === 'projectCompleted') {
+			let checked = (e.target as HTMLInputElement).checked;
 			setProject((prev) => {
 				return { ...prev, projectCompleted: checked };
 			});
-		} else if (item === 'price') {
+		} else if (item === 'prcheckedice') {
 			setProject((prev) => {
 				return { ...prev, [name]: value };
 			});
 
 			value === '' ? setPriceErr(err) : setPriceErr('');
 		} else if (item === 'paid') {
+			let checked = (e.target as HTMLInputElement).checked;
 			setProject((prev) => {
 				return { ...prev, paid: checked };
 			});
@@ -227,7 +242,7 @@ const ProjectAmend = () => {
 	};
 
 	// send updated details to db
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		// check no errors
 		if (titleErr || typeErr || descriptionErr || commentsErr || priceErr)
@@ -266,7 +281,7 @@ const ProjectAmend = () => {
 				scrollToTop();
 			}
 		} catch (err) {
-			console.log('dw user ', err);
+			if (err instanceof Error) console.log('dw user ', err);
 
 			setErrors('No Server Response');
 		}
@@ -383,12 +398,10 @@ const ProjectAmend = () => {
 					</label>
 
 					<div className='form-group'>
-						<label htmlFor='description' type='text'>
-							Project Requirements
-						</label>
+						<label htmlFor='description'>Project Requirements</label>
 						<textarea
-							rows='4'
-							cols='50'
+							rows={4}
+							cols={50}
 							name='description'
 							autoComplete='off'
 							value={project.description}
@@ -411,12 +424,10 @@ const ProjectAmend = () => {
 
 					{addShow && (
 						<div className='form-group'>
-							<label htmlFor='comments' type='text'>
-								Comment
-							</label>
+							<label htmlFor='comments'>Comment</label>
 							<textarea
-								rows='10'
-								cols='50'
+								rows={10}
+								cols={50}
 								name='comments'
 								autoComplete='off'
 								value={addComments}
@@ -448,8 +459,8 @@ const ProjectAmend = () => {
 										</div>
 
 										<textarea
-											rows='10'
-											cols='50'
+											rows={10}
+											cols={50}
 											readOnly
 											value={item.comments}
 										></textarea>
@@ -471,15 +482,13 @@ const ProjectAmend = () => {
 
 					{addPaidShow && (
 						<div className='form-group comment-container'>
-							<label htmlFor='description' type='text'>
-								Date Paid
-							</label>
+							<label htmlFor='description'>Date Paid</label>
 							<div>
 								<DatePicker
 									// locale='en-GB'
 									dateFormat='dd/MM/yyyy'
 									selected={startDate}
-									onChange={(date) => setStartDate(date)}
+									onChange={(date) => setStartDate(date!)}
 								/>
 							</div>
 							<div className='form-group'>
@@ -487,8 +496,8 @@ const ProjectAmend = () => {
 								<input
 									required
 									type='number'
-									min='0.00'
-									step='0.01'
+									min={0.0}
+									step={0.01}
 									name='paid-amount'
 									id='paid-amount'
 									value={paidAmount}

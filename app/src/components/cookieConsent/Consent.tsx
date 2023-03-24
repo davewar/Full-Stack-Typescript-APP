@@ -9,10 +9,10 @@ import './consent.css';
 import { useLocation } from 'react-router-dom';
 
 const Consent = () => {
-	const id = 'G-G4916C4E0D';
+	const id: string = 'G-G4916C4E0D';
 	// true=[prod]
-	// const ga4Live = false;
-	const ga4Live = process.env.REACT_APP_GA4LIVE;
+	const ga4Live: boolean = false;
+	// const ga4Live = process.env.REACT_APP_GA4LIVE;
 	const [showCookieCompo, setShowCookieComp] = useState(false); // delay the component from showing on screen, you wont see animations otherwise on mobile view
 	const [show, setShow] = useState(false); // show cookie policy
 	// cookie consent
@@ -22,7 +22,7 @@ const Consent = () => {
 		marketing: true,
 	});
 
-	const handleAccept = () => {
+	const handleAccept = (): void => {
 		if (ga4Live) {
 			// add marketing later
 			if (consent.analytical) {
@@ -32,7 +32,7 @@ const Consent = () => {
 		}
 	};
 
-	const handleDecline = () => {
+	const handleDecline = (): void => {
 		//remove google analytics cookies if any
 		Cookies.remove(`_ga_${id}`);
 		Cookies.remove('_gat');
@@ -46,13 +46,13 @@ const Consent = () => {
 		let isConsent = getCookieConsentValue();
 		// if true then Ga4 is live
 		if (ga4Live) {
-			if (isConsent === true) {
+			if (isConsent) {
 				ReactGA.send({ hitType: 'pageview', page: location.pathname });
 			}
 		}
 	}, [location, ga4Live]);
 
-	const onChange = (e, name) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
 		if (name === 'analytical') {
 			setConsent((prevState) => {
 				return {

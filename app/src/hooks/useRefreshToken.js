@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { UserContext } from '../contexts/user';
+import { baseUrl } from '../constants/roles';
 
-let baseUrl = process.env.REACT_APP_BACKEND_URL;
+// let baseUrl = process.env.REACT_APP_BACKEND_URL;
 
 // Does a refresh cookie exist? if,yes, give a new access token
 

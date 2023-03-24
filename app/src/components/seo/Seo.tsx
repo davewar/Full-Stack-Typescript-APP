@@ -1,6 +1,22 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-export default function Seo({ title, description, name, type, url, image }) {
+
+type SeoProps = {
+	title?: string;
+	description?: string;
+	name?: string;
+	type?: string;
+	url?: string;
+	image?: string;
+};
+export default function Seo({
+	title,
+	description,
+	name,
+	type,
+	url,
+	image,
+}: SeoProps) {
 	return (
 		<Helmet>
 			{/* Standard metadata tags */}

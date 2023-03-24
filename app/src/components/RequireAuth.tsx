@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { UserContext } from '../contexts/user';
 
-const RequireAuth = ({ allowedRoles }) => {
+const RequireAuth = ({ allowedRoles }: any) => {
 	const { role, accessToken } = useContext(UserContext); //global user
 
 	const found = allowedRoles?.includes(role);

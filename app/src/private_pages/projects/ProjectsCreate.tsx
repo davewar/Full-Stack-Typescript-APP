@@ -2,19 +2,25 @@ import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../contexts/user';
 import usePrivateFetch from '../../hooks/usePrivateFetch';
 import '../../public_pages/accounts/login.css';
-import Loading from '../../components/Loading.tsx';
+import Loading from '../../components/Loading';
 
 import { scrollToTop } from '../../utils/helpers';
 import Project from './Project';
 
+import { CustomerProps } from '../models/customerPropTypes';
+
+import { User } from '../models/usersPropTypes';
+
+// CustomerProps;   User   ;  CreateProjectProps
+
 const ProjectsCreate = () => {
-	const [customers, setCustomers] = useState([]);
+	const [customers, setCustomers] = useState<CustomerProps[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [errors, setErrors] = useState('');
 	const [customerSelected, setCustomerSelected] = useState(
 		'Please select customer'
 	);
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState<User[]>([]);
 	const [userErrors, setUserErrors] = useState('');
 	const [userSelected, setUserSelected] = useState('Please select employee');
 
@@ -56,7 +62,7 @@ const ProjectsCreate = () => {
 					}
 				}
 			} catch (err) {
-				console.log('dw email ', err.message);
+				if (err instanceof Error) console.log('dw email ', err.message);
 				setLoading(false);
 				setErrors('No Server Response');
 			}
@@ -84,7 +90,7 @@ const ProjectsCreate = () => {
 					// let usersList = data.msg.map(({ email, _id, name }) => {
 					// 	return { email, _id, name };
 					// });
-					let usersList = data.msg.map((item) => {
+					let usersList = data.msg.map((item: any) => {
 						return { email: item.email, _id: item._id, name: item.name };
 					});
 
@@ -104,7 +110,7 @@ const ProjectsCreate = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	const handleCustomer = (e) => {
+	const handleCustomer = (e: React.ChangeEvent<HTMLSelectElement>): void => {
 		setSuccess('');
 		setSignInErr('');
 		if (e.target.value === 'Please select customer') {
@@ -123,7 +129,7 @@ const ProjectsCreate = () => {
 		}
 	};
 
-	const handleUser = (e) => {
+	const handleUser = (e: React.ChangeEvent<HTMLSelectElement>): void => {
 		setSuccess('');
 		setSignInErr('');
 		if (e.target.value === 'Please select customer') {
