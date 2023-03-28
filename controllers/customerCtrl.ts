@@ -1,8 +1,5 @@
-// const router = require('express').Router();
-let Customer = require('../models/customer');
-// require('dotenv').config();
+import Customer from '../models/customer';
 import 'dotenv/config';
-
 import { Router, Request, Response } from 'express';
 
 const router = Router();

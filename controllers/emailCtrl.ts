@@ -1,6 +1,5 @@
 import Email from '../models/emails';
 import { main } from './sendEmails';
-
 import { Router } from 'express';
 import { Request, Response } from 'express';
 

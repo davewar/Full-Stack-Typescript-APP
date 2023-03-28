@@ -1,6 +1,5 @@
-let Product = require('../models/product');
-let Customer = require('../models/customer');
-
+import Product from '../models/product';
+import Customer from '../models/customer';
 import 'dotenv/config';
 import { Router } from 'express';
 import { Request, Response } from 'express';

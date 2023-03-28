@@ -1,4 +1,4 @@
-let User = require('../models/user');
+import User from '../models/user';
 import bcrypt from 'bcrypt';
 import { main } from './sendEmails';
 import jwt from 'jsonwebtoken';
