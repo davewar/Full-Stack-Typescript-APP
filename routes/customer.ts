@@ -4,6 +4,7 @@ import ROLES_LIST from '../config/rolesList';
 
 import { Router } from 'express';
 const router = Router();
+
 import {
 	getAllUsers_get,
 	signup_post,
@@ -43,4 +44,4 @@ router
 		updateUser_put
 	);
 
-module.exports = router;
+export default router;

@@ -68,4 +68,4 @@ router
 	.route('/update/:id')
 	.put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), updateUser_put);
 
-module.exports = router;
+export default router;

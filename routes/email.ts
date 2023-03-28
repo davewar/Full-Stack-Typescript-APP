@@ -29,4 +29,6 @@ router
 		deleteEmail_delete
 	); //delete emails
 
-module.exports = router;
+// module.exports = router;
+
+export default router;

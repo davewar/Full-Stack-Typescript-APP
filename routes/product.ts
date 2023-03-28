@@ -56,4 +56,4 @@ router
 		updateProject_put
 	);
 
-module.exports = router;
+export default router;

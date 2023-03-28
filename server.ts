@@ -40,19 +40,19 @@ app.use('/test', (req: Request, res: Response) => {
 });
 
 // login / password reset  / register / activate  = users
-const userRouter = require('./routes/users');
+import userRouter from './routes/users';
 app.use('/user', userRouter);
 
 //emails from clients
-const emailRouter = require('./routes/email');
+import emailRouter from './routes/email';
 app.use('/api/email', emailRouter);
 
 // create/ amend / update / get  = clients
-const customerRouter = require('./routes/customer');
+import customerRouter from './routes/customer';
 app.use('/api/customer', customerRouter);
 
 //create/ amend / update / get  = projects
-const productRouter = require('./routes/product');
+import productRouter from './routes/product';
 app.use('/api/product', productRouter);
 
 const PORT = process.env.PORT || 5000;
