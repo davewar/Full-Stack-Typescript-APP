@@ -22,7 +22,7 @@ https://bobbyhadz.com/blog/typescript-no-index-signature-with-parameter-of-type-
 
 https://joyofcode.xyz/typescript-fundamentals
 
-Backend:  @types/cookie-parser
+Backend:  @types/cookie-parser  @types/nodemailer
 @types/body-parser @types/config @types/cors @types/express @types/node @types/mongoose @types/bcrypt @types/jsonwebtoken ts-node typescript -D
 
 TYPESCRIPT_NODE_STARTER example

@@ -1,28 +1,29 @@
-const router = require('express').Router();
 let User = require('../models/user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const main = require('./sendEmails');
-
-require('dotenv').config();
+import bcrypt from 'bcrypt';
+import { main } from './sendEmails';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
+import { Router } from 'express';
+import { Request, Response } from 'express';
+const router = Router();
 
 // 900s
 //create token - 15 mins
-const createToken = (id) => {
-	return jwt.sign({ id }, process.env.SECRET_KEY, {
+const createToken = (id: string | jwt.JwtPayload) => {
+	return jwt.sign({ id }, process.env.SECRET_KEY as string, {
 		expiresIn: '900s',
 	});
 };
 
 //1d
-const createRefeshToken = (id) => {
-	return jwt.sign({ id }, process.env.REFESH_SECRET_KEY, {
+const createRefeshToken = (id: string | jwt.JwtPayload) => {
+	return jwt.sign({ id }, process.env.REFESH_SECRET_KEY as string, {
 		expiresIn: '1d',
 	});
 };
 
 //email string valid ?
-const isEmail = (email) => {
+const isEmail = (email: string): boolean => {
 	return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
 		email
 	);
@@ -33,7 +34,7 @@ const isEmail = (email) => {
 // @access Private
 
 // returns access token and sends cookie named refresh
-module.exports.login_post = async (req, res) => {
+export const login_post = async (req: Request, res: Response) => {
 	try {
 		const { email, password } = req.body;
 
@@ -145,7 +146,9 @@ module.exports.login_post = async (req, res) => {
 		// 	user: { id: user._id, name: user.name, role: user.role },
 		// });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -153,7 +156,7 @@ module.exports.login_post = async (req, res) => {
 // @route POST /user/signup
 // @access Public
 
-module.exports.signup_post = async (req, res) => {
+export const signup_post = async (req: Request, res: Response) => {
 	try {
 		const { name, email, password } = req.body;
 
@@ -210,7 +213,9 @@ module.exports.signup_post = async (req, res) => {
 			msg: 'Please check your email and activate your account using the link',
 		});
 	} catch (err) {
-		res.status(500).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -219,12 +224,14 @@ module.exports.signup_post = async (req, res) => {
 // @access Public
 
 // res.clearCookie('refreshtoken', { path: '/api/user/refresh_token' });
-module.exports.logout_get = async (req, res) => {
+export const logout_get = async (req: Request, res: Response) => {
 	try {
 		res.clearCookie('refreshtoken', { path: '/user/refresh_token' });
 		return res.status(202).json({ msg: 'logged out' });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -232,12 +239,14 @@ module.exports.logout_get = async (req, res) => {
 // @route DELETE /user/delete:id
 // @access Public
 
-module.exports.deleteUser_delete = async (req, res) => {
+export const deleteUser_delete = async (req: Request, res: Response) => {
 	try {
 		await User.findByIdAndDelete(req.params.id);
 		res.status(202).json({ msg: 'user deleted' });
 	} catch (err) {
-		res.json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -246,23 +255,29 @@ module.exports.deleteUser_delete = async (req, res) => {
 // @access Private
 
 // When APP Component first loads this function is run
-module.exports.refreshToken_get = async (req, res) => {
+export const refreshToken_get = async (req: Request, res: Response) => {
 	try {
 		const refresh_token = req.cookies.refreshtoken;
 
 		if (!refresh_token)
 			return res.status(403).json({ msg: 'Please Login or Register -a' });
 
-		jwt.verify(refresh_token, process.env.REFESH_SECRET_KEY, (err, decoded) => {
-			if (err)
-				return res.status(403).json({ msg: 'Please Login or Register -b' });
+		jwt.verify(
+			refresh_token,
+			process.env.REFESH_SECRET_KEY as string,
+			(err: any, decoded: any) => {
+				if (err)
+					return res.status(403).json({ msg: 'Please Login or Register -b' });
 
-			const accesstoken = createToken(decoded.id);
+				const accesstoken = createToken(decoded.id);
 
-			res.status(200).json({ accesstoken });
-		});
+				return res.status(200).json({ accesstoken });
+			}
+		);
 	} catch (err) {
-		res.status(400).json({ msg: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -272,7 +287,7 @@ module.exports.refreshToken_get = async (req, res) => {
 
 // context>user component - send access token in authization header. returns user name + role.
 // This function will run again from this compo if access token changes
-module.exports.getUser_get = async (req, res) => {
+export const getUser_get = async (req: Request | any, res: Response) => {
 	try {
 		const user = await User.findById(req.user.id).select('-password');
 
@@ -282,7 +297,9 @@ module.exports.getUser_get = async (req, res) => {
 			user: { name: user.name, role: user.role },
 		});
 	} catch (err) {
-		res.status(400).json({ msg: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -290,7 +307,7 @@ module.exports.getUser_get = async (req, res) => {
 // @route POST /user/forgot
 // @access Public
 
-module.exports.forgot_post = async (req, res) => {
+export const forgot_post = async (req: Request, res: Response) => {
 	try {
 		let { email } = req.body;
 
@@ -338,15 +355,17 @@ module.exports.forgot_post = async (req, res) => {
 			msg: 'Please check your email and reset your password using the link. You may need to check your spam/junk folder.',
 		});
 	} catch (err) {
-		console.log('Forgot PW. DW', err.message);
-		res.status(500).json({ errors: err.message });
+		if (err instanceof Error) {
+			console.log('Forgot PW. DW', err.message);
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
 // @desc new user activate account via email sent to them.
 // @route POST /user/activation
 // @access Public
-module.exports.activate_post = async (req, res) => {
+export const activate_post = async (req: Request | any, res: Response) => {
 	try {
 		const { accesstoken } = req.body;
 
@@ -356,16 +375,20 @@ module.exports.activate_post = async (req, res) => {
 					'Invalid Authentication. Please request a new link via the SignIn button',
 			});
 
-		jwt.verify(accesstoken, process.env.SECRET_KEY, (err, decoded) => {
-			if (err) {
-				return res.status(400).json({
-					errors:
-						'Invalid Authentication. Please request a new link via the SignIn button',
-				});
-			}
+		jwt.verify(
+			accesstoken,
+			process.env.SECRET_KEY as string,
+			(err: any, decoded: any) => {
+				if (err) {
+					return res.status(400).json({
+						errors:
+							'Invalid Authentication. Please request a new link via the SignIn button',
+					});
+				}
 
-			req.user = decoded.id;
-		});
+				req.user = decoded.id;
+			}
+		);
 
 		const user = await User.findById(req.user);
 
@@ -383,8 +406,10 @@ module.exports.activate_post = async (req, res) => {
 
 		return res.json({ msg: 'Account activated. Please log in.' });
 	} catch (err) {
-		console.log('Activate DW', err.message);
-		res.status(500).json({ errors: err.message });
+		if (err instanceof Error) {
+			console.log('Activate DW', err.message);
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -392,7 +417,7 @@ module.exports.activate_post = async (req, res) => {
 // @route POST /user/reset
 // @access Public
 
-module.exports.reset_post = async (req, res) => {
+export const reset_post = async (req: Request | any, res: Response) => {
 	try {
 		const { password, email, accesstoken } = req.body;
 
@@ -419,16 +444,20 @@ module.exports.reset_post = async (req, res) => {
 					'Invalid Authentication. Please check you entered your email address correctly and try again',
 			});
 
-		jwt.verify(accesstoken, process.env.SECRET_KEY, (err, decoded) => {
-			if (err) {
-				return res.status(400).json({
-					errors:
-						'Invalid Authentication. Please request a new link via the SignIn button',
-				});
-			}
+		jwt.verify(
+			accesstoken,
+			process.env.SECRET_KEY as string,
+			(err: any, decoded: any) => {
+				if (err) {
+					return res.status(400).json({
+						errors:
+							'Invalid Authentication. Please request a new link via the SignIn button',
+					});
+				}
 
-			req.user = decoded.id;
-		});
+				req.user = decoded.id;
+			}
+		);
 
 		const user = await User.findById(req.user);
 
@@ -453,7 +482,9 @@ module.exports.reset_post = async (req, res) => {
 			msg: 'Password successfully changed! Please log in to use your account',
 		});
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -461,7 +492,7 @@ module.exports.reset_post = async (req, res) => {
 // @route POST /user/update
 // @access Private
 
-module.exports.updateUser_put = async (req, res) => {
+export const updateUser_put = async (req: Request, res: Response) => {
 	if (!req?.params?.id)
 		return res.status(400).json({ errors: 'ID parameter is required.' });
 
@@ -488,8 +519,10 @@ module.exports.updateUser_put = async (req, res) => {
 			msg: 'User updated',
 		});
 	} catch (err) {
-		console.log('update put error', err);
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			console.log('update put error', err);
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -497,7 +530,7 @@ module.exports.updateUser_put = async (req, res) => {
 // @route Get /user
 // @access Private
 
-module.exports.getAllUsers_get = async (req, res) => {
+export const getAllUsers_get = async (req: Request, res: Response) => {
 	try {
 		const users = await User.find().select('-password');
 
@@ -505,6 +538,8 @@ module.exports.getAllUsers_get = async (req, res) => {
 
 		res.status(200).json({ msg: users });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };

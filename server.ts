@@ -2,8 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import mongoose, { ConnectOptions } from 'mongoose';
 import cookieParser from 'cookie-parser';
-
-require('dotenv').config();
+import 'dotenv/config';
 
 const app: Express = express();
 app.use(express.json());

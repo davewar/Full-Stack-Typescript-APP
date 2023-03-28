@@ -1,16 +1,22 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+import nodemailer from 'nodemailer';
+import 'dotenv/config';
 
 // https://myaccount.google.com/lesssecureapps
 // https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
 
-const main = (emailaddress, url, msg, text, html) => {
+export const main = (
+	emailaddress: string,
+	url: string,
+	msg: string,
+	text: string,
+	html?: any
+) => {
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
-			user: process.env.GMAIL_NAME,
-			pass: process.env.GMAIL_PASS,
+			user: process.env.GMAIL_NAME as string,
+			pass: process.env.GMAIL_PASS as string,
 		},
 	});
 
@@ -29,5 +35,3 @@ const main = (emailaddress, url, msg, text, html) => {
 		}
 	});
 };
-
-module.exports = main;

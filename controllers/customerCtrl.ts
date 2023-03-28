@@ -1,9 +1,14 @@
-const router = require('express').Router();
+// const router = require('express').Router();
 let Customer = require('../models/customer');
-require('dotenv').config();
+// require('dotenv').config();
+import 'dotenv/config';
+
+import { Router, Request, Response } from 'express';
+
+const router = Router();
 
 //email string valid ?
-const isEmail = (email) => {
+const isEmail = (email: string): boolean => {
 	return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
 		email
 	);
@@ -13,7 +18,7 @@ const isEmail = (email) => {
 // @route Get /customer
 // @access Private
 
-module.exports.getAllUsers_get = async (req, res) => {
+export const getAllUsers_get = async (req: Request, res: Response) => {
 	try {
 		const customers = await Customer.find();
 
@@ -23,7 +28,9 @@ module.exports.getAllUsers_get = async (req, res) => {
 
 		res.status(200).json({ msg: customers });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -31,7 +38,7 @@ module.exports.getAllUsers_get = async (req, res) => {
 // @route POST /customer/signup
 // @access Private
 
-module.exports.signup_post = async (req, res) => {
+export const signup_post = async (req: Request, res: Response) => {
 	try {
 		let { name, businessName, email, telephone, address, createdBy } = req.body;
 
@@ -70,7 +77,9 @@ module.exports.signup_post = async (req, res) => {
 			msg: 'New customer added',
 		});
 	} catch (err) {
-		res.status(500).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -78,12 +87,14 @@ module.exports.signup_post = async (req, res) => {
 // @route DELETE /customer/delete:id
 // @access Private
 
-module.exports.deleteUser_delete = async (req, res) => {
+export const deleteUser_delete = async (req: Request, res: Response) => {
 	try {
 		await Customer.findByIdAndDelete(req.params.id);
 		res.status(202).json({ msg: 'Customer deleted' });
 	} catch (err) {
-		res.json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -91,7 +102,7 @@ module.exports.deleteUser_delete = async (req, res) => {
 // @route POST /customer/update
 // @access Private
 
-module.exports.updateUser_put = async (req, res) => {
+export const updateUser_put = async (req: Request, res: Response) => {
 	if (!req?.params?.id)
 		return res.status(400).json({ errors: 'ID parameter is required.' });
 
@@ -120,7 +131,9 @@ module.exports.updateUser_put = async (req, res) => {
 			msg: 'Customer updated',
 		});
 	} catch (err) {
-		console.log('customer update put error', err);
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			console.log('customer update put error', err);
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
