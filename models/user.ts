@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const userSchema = new mongoose.Schema(
 	{
@@ -38,4 +38,8 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-module.exports = mongoose.model('User', userSchema);
+export type USER = InferSchemaType<typeof userSchema>;
+
+const User = mongoose.model<USER>('User', userSchema);
+
+export default User;

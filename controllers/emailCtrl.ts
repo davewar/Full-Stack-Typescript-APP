@@ -1,5 +1,4 @@
-let Email = require('../models/emails');
-// const main = require('./sendEmails');
+import Email from '../models/emails';
 import { main } from './sendEmails';
 
 import { Router } from 'express';

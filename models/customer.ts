@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const customerSchema = new mongoose.Schema(
 	{
@@ -15,7 +15,6 @@ const customerSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 			unique: true,
-			required: true,
 		},
 
 		telephone: {
@@ -37,4 +36,7 @@ const customerSchema = new mongoose.Schema(
 	}
 );
 
-module.exports = mongoose.model('Customer', customerSchema);
+export type CUSTOMER = InferSchemaType<typeof customerSchema>;
+
+const Customer = mongoose.model<CUSTOMER>('Customer', customerSchema);
+export default Customer;

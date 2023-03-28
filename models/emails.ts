@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const emailSchema = new mongoose.Schema(
 	{
@@ -19,5 +19,8 @@ const emailSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
+export type EMAIL = InferSchemaType<typeof emailSchema>;
 
-module.exports = mongoose.model('Email', emailSchema);
+const Email = mongoose.model<EMAIL>('Email', emailSchema);
+
+export default Email;
