@@ -1,4 +1,5 @@
-const rateLimit = require('express-rate-limit');
+import rateLimit from 'express-rate-limit';
+import { Request, Response, NextFunction } from 'express';
 
 // stop brute force login
 const loginLimiter = rateLimit({
@@ -9,7 +10,7 @@ const loginLimiter = rateLimit({
 			'Too many login attempts. Please try again after a 60 second pause',
 	},
 	skipSuccessfulRequests: true, // if logged in -then dont count me
-	handler: (req, res, next, options) => {
+	handler: (req: Request, res: Response, next: NextFunction, options: any) => {
 		res.status(options.statusCode).send(options.message);
 	},
 	// below are required by docs
@@ -17,4 +18,4 @@ const loginLimiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-module.exports = loginLimiter;
+export default loginLimiter;

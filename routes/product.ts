@@ -1,11 +1,8 @@
-// const router = require('express').Router();
-// const productCtrl = require('../controllers/productCtrl');
-const auth = require('../middlewares/auth');
-const verifyRoles = require('../middlewares/verifyRoles');
-const ROLES_LIST = require('../config/rolesList');
+import { auth } from '../middlewares/auth';
+import { verifyRoles } from '../middlewares/verifyRoles';
+import ROLES_LIST from '../config/rolesList';
 
 import { Router } from 'express';
-
 const router = Router();
 
 import {

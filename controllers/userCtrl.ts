@@ -109,7 +109,7 @@ export const login_post = async (req: Request, res: Response) => {
 		const val = user.validated;
 
 		//email address needs to be valid before first use
-		if (val == 'false') {
+		if (val == false) {
 			const accesstoken = createToken(user._id);
 			const url = `${process.env.CLIENT_URL}/user/activate/${accesstoken}`;
 			// main(email, url, 'DWSHOP - Please activate your account');

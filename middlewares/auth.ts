@@ -1,9 +1,8 @@
-// const jwt = require('jsonwebtoken');
 import jwt from 'jsonwebtoken';
-require('dotenv').config();
+import 'dotenv/config';
 import { NextFunction, Request, Response } from 'express';
 
-const auth = (req: Request | any, res: Response, next: NextFunction) => {
+export const auth = (req: Request | any, res: Response, next: NextFunction) => {
 	const tokenHeader: string | undefined = req.header('Authorization');
 
 	// -401 Unauthorized
@@ -34,5 +33,3 @@ const auth = (req: Request | any, res: Response, next: NextFunction) => {
 		}
 	}
 };
-
-module.exports = auth;

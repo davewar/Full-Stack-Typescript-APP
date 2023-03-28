@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
 			required: true,
 		},
 		validated: {
-			type: String,
+			type: Boolean,
 			default: false,
 		},
 		IncorrectPW: {
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
 			default: 0,
 		},
 		active: {
-			type: String,
+			type: Boolean,
 			default: true,
 		},
 	},

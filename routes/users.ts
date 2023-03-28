@@ -1,8 +1,6 @@
-// const router = require('express').Router();
-// const userCtrl = require('../controllers/userCtrl');
-const auth = require('../middlewares/auth');
-const verifyRoles = require('../middlewares/verifyRoles');
-const ROLES_LIST = require('../config/rolesList');
+import { auth } from '../middlewares/auth';
+import { verifyRoles } from '../middlewares/verifyRoles';
+import ROLES_LIST from '../config/rolesList';
 
 import { Router } from 'express';
 const router = Router();
@@ -22,7 +20,8 @@ import {
 } from '../controllers/userCtrl';
 
 // Extra security. stop brute force logining but I have incorrect pw attemps count on login anyway.
-const loginLimiter = require('../middlewares/loginLimiter');
+
+import loginLimiter from '../middlewares/loginLimiter';
 
 // **********************************
 router.route('/login').post(loginLimiter, login_post); //login
