@@ -1,12 +1,11 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const path = require('path');
-const cookieParser = require('cookie-parser');
+import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
+import mongoose, { ConnectOptions } from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 require('dotenv').config();
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
 app.use(cookieParser());
 
@@ -14,27 +13,30 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 const connectDb = async () => {
 	try {
-		let db = process.env.MONGO_URI;
+		let db = process.env.MONGO_URI as string;
+
 		if (process.env.NODE_ENV === 'test') {
-			db = process.env.MONGO_URI_TEST;
+			db = process.env.MONGO_URI_TEST as string;
 		}
 
 		await mongoose.connect(db, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-		});
+		} as ConnectOptions);
 
 		console.log('All good');
 	} catch (err) {
-		console.log('dw err desc', err);
-		console.log('DW err with connection');
-		process.exit(1);
+		if (err instanceof Error) {
+			console.log('dw err desc', err);
+			console.log('DW err with connection');
+			process.exit(1);
+		}
 	}
 };
 
 connectDb();
 
-app.use('/test', (req, res) => {
+app.use('/test', (req: Request, res: Response) => {
 	res.status(200).send({ message: 'Welcome' });
 });
 

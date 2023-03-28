@@ -1,4 +1,12 @@
-const listofEmails = [
+type ListofEmails = {
+	_id: number;
+	name: string;
+	comment: string;
+	createdAt: string;
+	updatedAt: string;
+}[];
+
+const listofEmails: ListofEmails = [
 	{
 		_id: 1,
 		name: 'email1@gmail.com',

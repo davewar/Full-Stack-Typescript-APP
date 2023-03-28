@@ -1,21 +1,31 @@
 import useRefreshToken from './useRefreshToken';
 import { baseUrl } from '../constants/roles';
 
+type FetcherResults = {
+	data: { msg?: string | object; errors: string };
+	response: {
+		status: number;
+	};
+};
+
 const usePrivateFetch = () => {
 	let refresh = useRefreshToken();
 
-	let originalFetch = async (url, options) => {
-		let response = await fetch(`${baseUrl}${url}`, options);
-		let data = await response.json();
+	let originalFetch = async (
+		url: RequestInfo,
+		options: RequestInit
+	): Promise<any> => {
+		let response: Response = await fetch(`${baseUrl}${url}`, options);
+		let data: FetcherResults = await response.json();
 
 		return { data, response };
 	};
 
-	let callFetch = async (url, options) => {
+	let callFetch = async (url: RequestInfo, options: RequestInit) => {
 		let { data, response } = await originalFetch(url, options);
 
 		//status code - forbidden.
-		if (response.status === 403) {
+		if (response?.status === 403) {
 			// Does a valid cookie exist - if yes, get a new access token & update state
 			let newToken = await refresh();
 

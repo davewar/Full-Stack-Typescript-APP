@@ -132,8 +132,8 @@ const ClientCreate = () => {
 			setSuccess('');
 			setSignInErr('');
 
-			let createUrl = `/api/customer/create`;
-			let createOptions = {
+			let createUrl: RequestInfo = `/api/customer/create`;
+			let createOptions: RequestInit = {
 				method: 'POST',
 				body: JSON.stringify({
 					name,
@@ -179,8 +179,10 @@ const ClientCreate = () => {
 					scrollToTop();
 				}
 			} catch (err) {
-				console.log('dw create customer ', err);
-				setSignInErr('No Server Response');
+				if (err instanceof Error) {
+					console.log('dw create customer ', err);
+					setSignInErr('No Server Response');
+				}
 			}
 		}
 	};

@@ -37,8 +37,8 @@ const ProjectsCreate = () => {
 
 	//get customers
 	useEffect(() => {
-		let url = '/api/customer';
-		let options = {
+		let url: RequestInfo = '/api/customer';
+		let options: RequestInit = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 

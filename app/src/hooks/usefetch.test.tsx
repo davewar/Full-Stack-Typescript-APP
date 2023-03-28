@@ -32,9 +32,12 @@ describe('usefetch hook', () => {
 
 		expect(result.current.isLoading).toBe(true); //true
 		expect(result.current.isError).toBe('');
-		expect(result.current.data).toEqual({
-			msg: 'Thank you for your enquiry. We will be in contact with you shortly.',
-		});
+		// expect(result.current.data).toEqual({
+		// 	msg: 'Thank you for your enquiry. We will be in contact with you shortly.',
+		// });
+		expect(result.current.data).toEqual(
+			'Thank you for your enquiry. We will be in contact with you shortly.'
+		);
 	});
 
 	test('Hook to return error message', async () => {

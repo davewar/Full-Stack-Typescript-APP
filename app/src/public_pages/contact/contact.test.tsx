@@ -6,8 +6,6 @@ import user from '@testing-library/user-event';
 import { rest } from 'msw';
 import { server } from '../../mocks/server';
 
-// import { expect, jest, test } from '@jest/globals';
-
 const MockContact = () => {
 	return (
 		<BrowserRouter>

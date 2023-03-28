@@ -141,9 +141,9 @@ const ProjectList = () => {
 		}
 
 		try {
-			let urlDelete = `/api/product/delete/${deleteId}`;
+			let urlDelete: RequestInfo = `/api/product/delete/${deleteId}`;
 
-			let optionsDelete = {
+			let optionsDelete: RequestInit = {
 				method: 'DELETE',
 				body: JSON.stringify({ _id: deleteId }),
 				headers: {
@@ -183,13 +183,13 @@ const ProjectList = () => {
 		}
 	};
 
-	const getIdDelete = (id: string) => {
+	const getIdDelete = (id: string): void => {
 		setDeleteId(id);
 		setDeleteShow(true); // show modal
 	};
 
 	// user chosen not to delete email, clear state & close modal
-	const closeModal = () => {
+	const closeModal = (): void => {
 		setDeleteId('');
 		setDeleteShow(false);
 	};

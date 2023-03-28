@@ -1,4 +1,16 @@
-export const TESTUSERS = [
+type TestUsers = {
+	_id: number;
+	name: string;
+	email: string;
+	validated: string;
+	IncorrectPW: number;
+	role: number;
+	active: string;
+	createdAt: string;
+	updatedAt: string;
+}[];
+
+export const TESTUSERS: TestUsers = [
 	{
 		_id: 0,
 		name: 'I am basic user',
@@ -34,7 +46,26 @@ export const TESTUSERS = [
 	},
 ];
 
-export const CUSTOMERS = [
+type Cust = {
+	_id: string;
+	name: string;
+	businessName: string;
+	email: string;
+	telephone: string;
+	address: {
+		addressLine1: string;
+		addressLine2: string;
+		addressLine3: string;
+		town: string;
+		county: string;
+		postcode: string;
+	};
+	createdBy: string;
+	createdAt: string;
+	updatedAt: string;
+}[];
+
+export const CUSTOMERS: Cust = [
 	{
 		_id: '11',
 		name: 'newnameforCustomer1',
@@ -73,7 +104,7 @@ export const CUSTOMERS = [
 	},
 ];
 
-export const AMENDCUSTOMER1 = [
+export const AMENDCUSTOMER1: Cust = [
 	{
 		_id: '11',
 		name: 'newnameforCustomer1AMEND',

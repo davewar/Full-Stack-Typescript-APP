@@ -7,10 +7,17 @@ import emailImg from '../../assets/images/email.png';
 
 import { FaWhatsapp } from 'react-icons/fa';
 
+import { URL } from '../../App';
+
+type FetchData = {
+	msg?: string;
+	errors?: string;
+};
+
 let map =
 	'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d159019.04030805102!2d-0.006866832327827696!3d51.482525396909296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8afb31d647aa3%3A0x31adb65f3f5a8bf8!2s20%20Sussex%20Rd%2C%20Erith%20DA8%201JB!5e0!3m2!1sen!2suk!4v1668516813646!5m2!1sen!2suk';
 
-const Contact: React.FC = () => {
+const Contact = () => {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [comment, setComment] = useState<string>('');
@@ -66,9 +73,9 @@ const Contact: React.FC = () => {
 		setSuccess('');
 
 		if (name && email && comment && !nameErr && !emailErr && !commentErr) {
-			let url: string = '/api/email/';
+			let url: RequestInfo = '/api/email/';
 
-			let options = {
+			let options: RequestInit = {
 				method: 'POST',
 				body: JSON.stringify({ name, email, comment }),
 				headers: {
@@ -77,10 +84,11 @@ const Contact: React.FC = () => {
 				},
 			};
 
-			let baseUrl = process.env.REACT_APP_BACKEND_URL;
+			// let baseUrl = process.env.REACT_APP_BACKEND_URL!;
+			let baseUrl = URL;
 
-			const res = await fetch(`${baseUrl}${url}`, options);
-			const data = await res.json();
+			const res: Response = await fetch(`${baseUrl}${url}`, options);
+			const data: FetchData = await res.json();
 
 			if (data.msg) {
 				setSuccess(data.msg);
@@ -88,9 +96,9 @@ const Contact: React.FC = () => {
 				setEmail('');
 				setComment('');
 			} else if (data.errors) {
-				setSignInErr(data.errors);
+				setSignInErr(data.errors!);
 			} else {
-				setSignInErr(data.errors);
+				setSignInErr(data.errors!);
 			}
 		}
 	};

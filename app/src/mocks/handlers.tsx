@@ -51,10 +51,11 @@ export const handlers = [
 		);
 	}),
 
-	rest.post('http://localhost:5000/user/login', async (req, res, ctx) => {
+	// rest.post('http://localhost:5000/user/login', async (req, res, ctx)
+	rest.post('http://localhost/user/login', async (req, res, ctx) => {
 		let { password, email } = await req.json();
 
-		let userid = TESTUSERS[0].id;
+		let userid = TESTUSERS[0]._id;
 		let username = TESTUSERS[0].name;
 		let userrole = TESTUSERS[0].role;
 		let accesstoken =
@@ -91,18 +92,10 @@ export const handlers = [
 				})
 			);
 		}
-
-		// return res(
-		// 	ctx.json({
-		// 		msg: {
-		// 			accesstoken,
-		// 			user: { id: userid, name: username, role: userrole },
-		// 		},
-		// 	})
-		// );
 	}),
 
-	rest.get('http://localhost/user/infor', async (req, res, ctx) => {
+	// rest.get('http://localhost/user/infor', async (req, res, ctx) => {
+	rest.get('http://localhost:5000/user/infor', async (req, res, ctx) => {
 		let username = TESTUSERS[0].name;
 		let userrole = TESTUSERS[0].role;
 

@@ -6,16 +6,20 @@ import { baseUrl } from '../constants/roles';
 
 // Does a refresh cookie exist? if,yes, give a new access token
 
+type FetchData = {
+	accesstoken?: string;
+};
+
 const useRefreshToken = () => {
 	let { setAccessToken, logUserOut } = useContext(UserContext);
 
 	const refresh = async () => {
 		try {
-			const res = await fetch(`${baseUrl}/user/refresh_token`, {
+			const res: Response = await fetch(`${baseUrl}/user/refresh_token`, {
 				credentials: 'include',
 			});
 
-			const data = await res.json();
+			const data: FetchData = await res.json();
 
 			if (data.accesstoken) {
 				setAccessToken(data.accesstoken);
@@ -26,7 +30,9 @@ const useRefreshToken = () => {
 				logUserOut();
 			}
 		} catch (err) {
-			console.log(err);
+			if (err instanceof Error) {
+				console.log(err);
+			}
 		}
 	};
 

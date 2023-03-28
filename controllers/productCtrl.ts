@@ -1,13 +1,18 @@
-const router = require('express').Router();
+// const router = require('express').Router();
 let Product = require('../models/product');
 let Customer = require('../models/customer');
 require('dotenv').config();
+
+import { Router } from 'express';
+import { Request, Response } from 'express';
+
+const router = Router();
 
 // @desc  get all users
 // @route Get /product
 // @access Private
 
-module.exports.getAllProjects_get = async (req, res) => {
+export const getAllProjects_get = async (req: Request, res: Response) => {
 	try {
 		const products = await Product.find();
 
@@ -16,7 +21,9 @@ module.exports.getAllProjects_get = async (req, res) => {
 
 		res.status(200).json({ msg: products });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -24,7 +31,7 @@ module.exports.getAllProjects_get = async (req, res) => {
 // @route POST /product/signup
 // @access Private
 
-module.exports.newProject_post = async (req, res) => {
+export const newProject_post = async (req: Request, res: Response) => {
 	try {
 		const {
 			customerID,
@@ -80,7 +87,9 @@ module.exports.newProject_post = async (req, res) => {
 			msg: 'New project added',
 		});
 	} catch (err) {
-		res.status(500).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -88,12 +97,14 @@ module.exports.newProject_post = async (req, res) => {
 // @route DELETE /product/delete:id
 // @access Private
 
-module.exports.deleteProject_delete = async (req, res) => {
+export const deleteProject_delete = async (req: Request, res: Response) => {
 	try {
 		await Product.findByIdAndDelete(req.params.id);
 		res.status(202).json('Project deleted');
 	} catch (err) {
-		res.json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
@@ -101,7 +112,7 @@ module.exports.deleteProject_delete = async (req, res) => {
 // @route POST /product/update
 // @access Private
 
-module.exports.updateProject_put = async (req, res) => {
+export const updateProject_put = async (req: Request, res: Response) => {
 	if (!req?.params?.id)
 		return res.status(400).json({ errors: 'ID parameter is required.' });
 
@@ -161,15 +172,17 @@ module.exports.updateProject_put = async (req, res) => {
 			msg: 'Project updated',
 		});
 	} catch (err) {
-		console.log('project update put error', err);
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			console.log('project update put error', err);
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };
 
 // @desc get single product
 // @route GET /product/item
 // @access Private
-module.exports.getProject_get = async (req, res) => {
+export const getProject_get = async (req: Request, res: Response) => {
 	try {
 		const products = await Product.find({ _id: req.params.id });
 
@@ -178,6 +191,8 @@ module.exports.getProject_get = async (req, res) => {
 
 		res.status(200).json({ msg: products });
 	} catch (err) {
-		res.status(400).json({ errors: err.message });
+		if (err instanceof Error) {
+			return res.status(400).json({ errors: err.message });
+		}
 	}
 };

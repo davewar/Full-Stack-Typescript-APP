@@ -4,7 +4,7 @@ import Loading from './components/Loading';
 
 import useRefreshToken from './hooks/useRefreshToken';
 
-export const URL = process.env.REACT_APP_BACKEND_URL;
+export const URL = 'http://localhost:5000';
 
 function App() {
 	const [isLoading, setLoading] = useState(true);

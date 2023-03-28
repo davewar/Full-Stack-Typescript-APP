@@ -34,12 +34,12 @@ const EmailList = () => {
 	let { callFetch } = usePrivateFetch();
 
 	useEffect(() => {
-		let url = '/api/email';
-		let options = {
+		let url: RequestInfo = '/api/email';
+		let options: RequestInit = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 
-		let getEmails = async () => {
+		let getEmails = async (): Promise<void> => {
 			try {
 				let { data, response } = await callFetch(url, options);
 

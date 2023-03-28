@@ -1,6 +1,21 @@
 import { TESTUSERS } from './users';
 
-let customerOne = {
+type Cust = {
+	name: string;
+	businessName: string;
+	email: string;
+	telephone: string;
+	address: {
+		addressLine1: string;
+		addressLine2: string;
+		addressLine3: string;
+		town: string;
+		county: string;
+		postcode: string;
+	};
+};
+
+let customerOne: Cust = {
 	name: 'cust1',
 	businessName: 'bus1',
 	email: 'customer1@gmail.com',
@@ -15,7 +30,7 @@ let customerOne = {
 	},
 };
 
-let customerTwo = {
+let customerTwo: Cust = {
 	name: 'cust2',
 	businessName: 'bus2',
 	email: 'customer2@gmail.com',
@@ -30,7 +45,7 @@ let customerTwo = {
 	},
 };
 
-let customerThree = {
+let customerThree: Cust = {
 	name: 'cust3',
 	businessName: 'bus3',
 	email: 'customer3@gmail.com',
@@ -45,16 +60,7 @@ let customerThree = {
 	},
 };
 
-// let projectOne = {
-// 	customerID: 'customer1@gmail.com',
-// 	title: 'Title project1...',
-// 	type: ['Excel', 'Access', 'Website', 'BI'],
-// 	price: '100',
-// 	description: 'Description....',
-// 	projectCompleted: 'false',
-// };
-
-let products = [
+export let products = [
 	{
 		_id: 1,
 		customerID: 'customer1@gmail.com',

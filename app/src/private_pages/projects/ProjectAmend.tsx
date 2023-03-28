@@ -65,8 +65,8 @@ const ProjectAmend = () => {
 
 	//get projects
 	useEffect(() => {
-		let url = '/api/product/item/' + id;
-		let options = {
+		let url: RequestInfo = '/api/product/item/' + id;
+		let options: RequestInit = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 

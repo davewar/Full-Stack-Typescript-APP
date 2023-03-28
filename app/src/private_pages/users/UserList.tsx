@@ -36,12 +36,12 @@ const UserList = () => {
 	let navigate = useNavigate();
 
 	useEffect(() => {
-		let url = `/user`;
-		let options = {
+		let url: RequestInfo = `/user`;
+		let options: RequestInit = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 
-		let getUsers = async () => {
+		let getUsers = async (): Promise<void> => {
 			try {
 				let { data, response } = await callFetch(url, options);
 
@@ -74,8 +74,8 @@ const UserList = () => {
 		setSuccess('');
 		setFail('');
 
-		let updateUrl = `/user/update/${id}`;
-		let updateOptions = {
+		let updateUrl: RequestInfo = `/user/update/${id}`;
+		let updateOptions: RequestInit = {
 			method: 'PUT',
 			body: JSON.stringify({ role, active, validated }),
 			headers: {

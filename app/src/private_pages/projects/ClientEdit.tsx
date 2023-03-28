@@ -29,12 +29,12 @@ const ClientEdit = () => {
 	}, [customers]);
 
 	useEffect(() => {
-		let url = '/api/customer';
-		let options = {
+		let url: RequestInfo = '/api/customer';
+		let options: RequestInit = {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		};
 
-		let getCustomers = async () => {
+		let getCustomers = async (): Promise<void> => {
 			try {
 				let { data, response } = await callFetch(url, options);
 				if (response.status === 403 && data.errors) {

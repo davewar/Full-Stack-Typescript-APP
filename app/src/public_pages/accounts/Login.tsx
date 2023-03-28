@@ -137,7 +137,7 @@ const Login = () => {
 							<label htmlFor='password'>Password</label>
 							<div className='input-container'>
 								<input
-									type={visable ? 'password' : 'text'}
+									type={visable ? 'text' : 'password'}
 									required
 									autoComplete='off'
 									name='password'

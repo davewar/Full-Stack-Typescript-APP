@@ -135,8 +135,8 @@ const Project = (props: CreateProjectProps) => {
 			setSuccess('');
 			setSignInErr('');
 
-			let createUrl = `/api/product/create`;
-			let createOptions = {
+			let createUrl: RequestInfo = `/api/product/create`;
+			let createOptions: RequestInit = {
 				method: 'POST',
 				body: JSON.stringify({
 					customerID,
