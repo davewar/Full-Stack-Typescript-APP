@@ -1,28 +1,27 @@
-const chai = require('chai');
-let expect = chai.expect;
+import chai, { expect, assert, use } from 'chai';
 let should = chai.should();
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { assert, use } = require('chai');
-
+import chaiHttp from 'chai-http';
+import server from '../server';
 const { v4: uuidv4 } = require('uuid');
-const logOutTest = require('./__testUtils__/userlogout');
-const LOGINS = require('./__testUtils__/logins');
 
-require('dotenv').config();
-let userPassword = process.env.userpassword;
+import logOutTest from './__testUtils__/userlogout';
+import LOGINS from './__testUtils__/logins';
 
-const Product = require('../models/product');
-let accessToken = '';
-let userID = '';
+import 'dotenv/config';
 
-let {
+let userPassword = process.env.userpassword as string;
+
+import Product from '../models/product';
+let accessToken: string = '';
+let userID: string = '';
+
+import {
 	projectOne,
 	changeProjectOne,
 	projectTwo,
-} = require('./__testUtils__/projects');
+} from './__testUtils__/projects';
 
-let dte = new Date().toLocaleString().replace(',', '');
+let dte: string = new Date().toLocaleString().replace(',', '');
 
 chai.use(chaiHttp);
 
@@ -30,7 +29,11 @@ describe('* Customer private view pages *', () => {
 	describe('   Editor user person can view private pages', () => {
 		//reset
 		before((done) => {
-			Product.deleteMany({}, function (err) {});
+			Product.deleteMany({}, function (err) {
+				if (err) {
+					console.log('DW Product deletemany', err);
+				}
+			});
 			done();
 		});
 
@@ -53,8 +56,8 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.user).to.have.property('role', 1);
-						accessToken = res.body.accesstoken;
+						expect(res.body.msg.user).to.have.property('role', 1);
+						accessToken = res.body.msg.accesstoken;
 						chai
 							.request(server)
 							.get('/api/product')
@@ -410,8 +413,8 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.user).to.have.property('role', 0);
-						accessToken = res.body.accesstoken;
+						expect(res.body.msg.user).to.have.property('role', 0);
+						accessToken = res.body.msg.accesstoken;
 						chai
 							.request(server)
 							.get('/api/product')
@@ -618,8 +621,8 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.user).to.have.property('role', 2);
-						accessToken = res.body.accesstoken;
+						expect(res.body.msg.user).to.have.property('role', 2);
+						accessToken = res.body.msg.accesstoken;
 						chai
 							.request(server)
 							.get('/api/product')

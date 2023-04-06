@@ -1,19 +1,17 @@
-const chai = require('chai');
-const expect = chai.expect;
-const should = chai.should();
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const assert = require('assert');
-const { log } = console;
+import chai, { expect, assert, use } from 'chai';
 
-const logOutTest = require('./__testUtils__/userlogout');
-const LOGINS = require('./__testUtils__/logins');
+import chaiHttp from 'chai-http';
+import server from '../server';
+import logOutTest from './__testUtils__/userlogout';
+import LOGINS from './__testUtils__/logins';
 
-require('dotenv').config();
-let userPassword = process.env.userpassword;
+import 'dotenv/config';
 
-const User = require('../models/user');
-let accessToken = '';
+let userPassword = process.env.userpassword as string;
+
+import User from '../models/user';
+
+let accessToken: string = '';
 
 chai.use(chaiHttp);
 
@@ -53,7 +51,7 @@ describe('* Register user *', () => {
 
 		it('2. Basic User logged in, person NOT able to create new user as they dont have this permission, expect error message', (done) => {
 			// reset
-			accesstoken = '';
+			accessToken = '';
 			chai
 				.request(server)
 				.post('/user/login')
@@ -72,7 +70,7 @@ describe('* Register user *', () => {
 						);
 						done();
 					} else {
-						accessToken = res.body.accesstoken;
+						accessToken = res.body.msg.accesstoken;
 
 						//gets all users
 						chai
@@ -102,7 +100,7 @@ describe('* Register user *', () => {
 		});
 
 		it('3. Editor User logged in, person able to create new user', (done) => {
-			accesstoken = '';
+			accessToken = '';
 			chai
 				.request(server)
 				.post('/user/login')
@@ -121,7 +119,7 @@ describe('* Register user *', () => {
 						);
 						done();
 					} else {
-						accessToken = res.body.accesstoken;
+						accessToken = res.body.msg.accesstoken;
 
 						chai
 							.request(server)
@@ -240,7 +238,7 @@ describe('* Register user *', () => {
 						);
 						done();
 					} else {
-						accessToken = res.body.accesstoken;
+						accessToken = res.body.msg.accesstoken;
 
 						//gets all users
 						chai

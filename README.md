@@ -4,4 +4,6 @@
 - Express
 - React
 - Node
+
 - React Testing Library
+- Mocka / Chai

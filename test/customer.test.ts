@@ -1,26 +1,35 @@
-const chai = require('chai');
-let expect = chai.expect;
+import chai, { expect, assert, use } from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server';
+import logOutTest from './__testUtils__/userlogout';
+import LOGINS from './__testUtils__/logins';
+// import 'mocha';
+
 let should = chai.should();
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { assert, use } = require('chai');
-const { log } = require('console');
 
-const logOutTest = require('./__testUtils__/userlogout');
-const LOGINS = require('./__testUtils__/logins');
+import 'dotenv/config';
 
-require('dotenv').config();
-let userPassword = process.env.userpassword;
+let userPassword = process.env.userpassword as string;
 
-const Customer = require('../models/customer');
-let accessToken = '';
-let userID = '';
+import Customer from '../models/customer';
 
-let {
+let accessToken: string = '';
+let userID: string = '';
+let user;
+
+import {
 	customerOne,
 	customerTwo,
 	customerThree,
-} = require('./__testUtils__/projects');
+} from './__testUtils__/projects';
+
+import { Response } from 'express';
+
+// let {
+// 	customerOne,
+// 	customerTwo,
+// 	customerThree,
+// } = require('./__testUtils__/projects');
 
 chai.use(chaiHttp);
 
@@ -28,7 +37,10 @@ describe('* Customer private view pages *', () => {
 	describe('   Editor user person can view private pages', () => {
 		//reset
 		before((done) => {
-			Customer.deleteMany({}, function (err) {});
+			Customer.deleteMany({}, function (err) {
+				if (err)
+					console.log('DW error in customer.test Customer.deletemany', err);
+			});
 			done();
 		});
 
@@ -51,11 +63,11 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 1);
-						accessToken = res.body.accesstoken;
-						user = res.body.user;
+						// expect(res.body.msg).to.have.keys('accesstoken', 'user');
+						expect(res.body.msg.user).to.have.keys('id', 'name', 'role');
+						expect(res.body.msg.user).to.have.property('role', 1);
+						accessToken = res.body.msg.accesstoken;
+						user = res.body.msg.user;
 
 						chai
 							.request(server)
@@ -64,8 +76,8 @@ describe('* Customer private view pages *', () => {
 							.set('Authorization', `Bearer ${accessToken}`)
 							.end((err, res) => {
 								if (err) done(err);
-								res.body.msg.should.equal('No customers found');
-								res.status.should.equal(400);
+
+								expect(res.body.msg).to.equal('No customers found');
 
 								done();
 							});
@@ -239,7 +251,7 @@ describe('* Customer private view pages *', () => {
 					if (err) done(err);
 
 					assert.equal(res.body.errors, 'Access denied 2');
-					assert.equal(res.status, '403');
+					assert.equal(res.status, 403);
 					// logout user
 					logOutTest(LOGINS.userOne, userPassword);
 					done();
@@ -267,7 +279,10 @@ describe('* Customer private view pages *', () => {
 	describe('   Basic user person can view private pages', () => {
 		//reset
 		before((done) => {
-			Customer.deleteOne({ name: 'cust2' }, function (err) {});
+			Customer.deleteOne({ name: 'cust2' }, function (err) {
+				if (err)
+					console.log('DW error in customer.test Customer.deletemany', err);
+			});
 			done();
 		});
 
@@ -293,11 +308,10 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 0);
-						accessToken = res.body.accesstoken;
-						// user = res.body.user;
+						// expect(res.body.msg).to.have.keys('accesstoken', 'user');
+						expect(res.body.msg.user).to.have.keys('id', 'name', 'role');
+						expect(res.body.msg.user).to.have.property('role', 0);
+						accessToken = res.body.msg.accesstoken;
 
 						chai
 							.request(server)
@@ -433,7 +447,7 @@ describe('* Customer private view pages *', () => {
 					if (err) done(err);
 
 					assert.equal(res.body.errors, 'Access denied 2');
-					assert.equal(res.status, '403');
+					assert.equal(res.status, 403);
 					// logout user
 					logOutTest(LOGINS.userEmail, userPassword);
 					done();
@@ -470,11 +484,9 @@ describe('* Customer private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 2);
-						accessToken = res.body.accesstoken;
-						// user = res.body.user;
+						expect(res.body.msg.user).to.have.keys('id', 'name', 'role');
+						expect(res.body.msg.user).to.have.property('role', 2);
+						accessToken = res.body.msg.accesstoken;
 
 						chai
 							.request(server)

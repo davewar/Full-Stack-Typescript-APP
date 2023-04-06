@@ -1,6 +1,6 @@
-const LOGINS = require('./logins');
+import LOGINS from './logins';
 
-let customerOne = {
+export let customerOne = {
 	name: 'cust1',
 	businessName: 'bus1',
 	email: 'customer1@gmail.com',
@@ -15,7 +15,7 @@ let customerOne = {
 	},
 };
 
-let customerTwo = {
+export let customerTwo = {
 	name: 'cust2',
 	businessName: 'bus2',
 	email: 'customer2@gmail.com',
@@ -30,7 +30,7 @@ let customerTwo = {
 	},
 };
 
-let customerThree = {
+export let customerThree = {
 	name: 'cust3',
 	businessName: 'bus3',
 	email: 'customer3@gmail.com',
@@ -45,7 +45,7 @@ let customerThree = {
 	},
 };
 
-let projectOne = {
+export let projectOne = {
 	customerID: 'customer1@gmail.com',
 	title: 'Title project1...',
 	type: ['Excel', 'Access', 'Website', 'BI'],
@@ -54,7 +54,7 @@ let projectOne = {
 	projectCompleted: 'false',
 };
 
-let changeProjectOne = {
+export let changeProjectOne = {
 	customerID: 'customer1@gmail.com',
 	title: 'Title project1... CHANGED',
 	type: ['Excel'],
@@ -89,7 +89,7 @@ let changeProjectOne = {
 	lastUpdatedBy: LOGINS.userOne,
 };
 
-let projectTwo = {
+export let projectTwo = {
 	customerID: 'customer2@gmail.com',
 	title: 'Title project2...',
 	type: ['Excel', 'Access'],
@@ -98,7 +98,7 @@ let projectTwo = {
 	projectCompleted: 'false',
 };
 
-let changeProjectTwo = {
+export let changeProjectTwo = {
 	customerID: 'customer1@gmai2.com',
 	title: 'Title project2... CHANGED',
 	type: ['Excel'],
@@ -133,12 +133,12 @@ let changeProjectTwo = {
 	lastUpdatedBy: LOGINS.userOne,
 };
 
-module.exports = {
-	customerOne,
-	customerTwo,
-	customerThree,
-	projectOne,
-	changeProjectOne,
-	projectTwo,
-	changeProjectTwo,
-};
+//  export default {
+// 	customerOne,
+// 	customerTwo,
+// 	customerThree,
+// 	projectOne,
+// 	changeProjectOne,
+// 	projectTwo,
+// 	changeProjectTwo,
+// };

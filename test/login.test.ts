@@ -1,18 +1,12 @@
-const chai = require('chai');
-let expect = chai.expect;
-let should = chai.should();
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { assert } = require('chai');
-const { log } = require('console');
+import chai, { expect, assert } from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server';
+import LOGINS from './__testUtils__/logins';
+import 'dotenv/config';
 
-const LOGINS = require('./__testUtils__/logins');
-
-require('dotenv').config();
-let userPassword = process.env.userpassword;
-
-let accessToken = '';
-let rToken = '';
+let userPassword = process.env.userpassword as string;
+let accessToken: string = '';
+let rToken: string = '';
 
 chai.use(chaiHttp);
 
@@ -33,19 +27,19 @@ describe('* Login *', () => {
 					expect(res.status).to.be.equal(200);
 					assert.equal(res.status, 200);
 					expect(res.body).to.be.a('object');
-					expect(res.body.accesstoken).to.be.a('string');
-					expect(res.body.user).to.be.a('object');
-					expect(res.body.user).to.have.property('id');
-					expect(res.body.user).to.have.property('name');
-					expect(res.body.user).to.have.property('role');
+					expect(res.body.msg.accesstoken).to.be.a('string');
+					expect(res.body.msg.user).to.be.a('object');
+					expect(res.body.msg.user).to.have.property('id');
+					expect(res.body.msg.user).to.have.property('name');
+					expect(res.body.msg.user).to.have.property('role');
 
-					let userAccessToken = res.body.accesstoken;
+					let userAccessToken = res.body.msg.accesstoken;
 					assert.isString(userAccessToken);
 
-					expect(res.body.user).to.have.property('role');
-					let rt = res.headers['set-cookie'];
+					expect(res.body.msg.user).to.have.property('role');
+					let rt = res.header['set-cookie'];
 
-					expect(Object.keys(res.headers)).to.contain('set-cookie');
+					expect(Object.keys(res.header)).to.contain('set-cookie');
 
 					// ('refreshtoken=eyJhbG...; Max-Age=86400; Path=/user/refresh_token; Expires=Mon, 23 Jan 2023 11:41:36 GMT; HttpOnly');
 					expect(rt).to.be.a('Array');
@@ -54,7 +48,7 @@ describe('* Login *', () => {
 
 					rToken = userRefreshToken;
 
-					accessToken = res.body.accessToken;
+					accessToken = res.body.msg.accessToken;
 
 					done();
 				});
@@ -62,6 +56,7 @@ describe('* Login *', () => {
 
 		it('1b. Basic User able to login with valid details - USER Persist: if cookie valid provide new accessToken (useRefreshToken hook)', (done) => {
 			const cValue = 'refreshtoken=' + rToken;
+
 			chai
 				.request(server)
 				.get('/user/refresh_token')
@@ -70,6 +65,7 @@ describe('* Login *', () => {
 
 				.end((err, res) => {
 					if (err) done(err);
+
 					expect(res.body.accesstoken).to.be.a('string');
 
 					accessToken = res.body.accesstoken;

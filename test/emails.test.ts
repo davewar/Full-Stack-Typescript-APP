@@ -1,17 +1,16 @@
-const chai = require('chai');
-let expect = chai.expect;
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { assert, use } = require('chai');
+import chai, { expect, use, assert } from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server';
 
-const Emails = require('../models/emails');
-const LOGINS = require('./__testUtils__/logins');
+import 'dotenv/config';
+import Emails from '../models/emails';
+import LOGINS from './__testUtils__/logins';
 
-require('dotenv').config();
-let userPassword = process.env.userpassword;
+let userPassword = process.env.userpassword as string;
 
-let accessToken = '';
-let idEmail = '';
+let accessToken: string = '';
+let idEmail: string = '';
+let userRT: string = '';
 
 chai.use(chaiHttp);
 
@@ -19,7 +18,9 @@ describe('* Emails *', () => {
 	describe('   Contact Form', () => {
 		//delete all emails - clean up
 		before((done) => {
-			Emails.deleteMany({}, function (err) {});
+			Emails.deleteMany({}, function (err) {
+				if (err) console.log('DW err, Emaild deletemany', err);
+			});
 			done();
 		});
 
@@ -108,20 +109,20 @@ describe('* Emails *', () => {
 
 					expect(res.status).to.be.equal(200);
 					assert.equal(res.status, 200);
-					expect(res.body).to.be.a('object');
-					expect(res.body.accesstoken).to.be.a('string');
-					expect(res.body.user).to.be.a('object');
-					expect(res.body.user).to.have.property('id');
-					expect(res.body.user).to.have.property('name');
-					expect(res.body.user).to.have.property('role');
 
-					let userAccessToken = res.body.accesstoken;
+					expect(res.body).to.be.a('object');
+					// expect(res.body.msg.accesstoken).to.be.a('string');
+					expect(res.body.msg.user).to.be.a('object');
+					expect(res.body.msg.user).to.have.property('id');
+					expect(res.body.msg.user).to.have.property('name');
+					expect(res.body.msg.user).to.have.property('role');
+
+					let userAccessToken = res.body.msg.accesstoken;
 					assert.isString(userAccessToken);
 
-					expect(res.body.user).to.have.property('role');
-					let rt = res.headers['set-cookie'];
+					let rt = res.header['set-cookie'];
 
-					expect(Object.keys(res.headers)).to.contain('set-cookie');
+					expect(Object.keys(res.header)).to.contain('set-cookie');
 
 					// ('refreshtoken=eyJhbG...; Max-Age=86400; Path=/user/refresh_token; Expires=Mon, 23 Jan 2023 11:41:36 GMT; HttpOnly');
 					expect(rt).to.be.a('Array');

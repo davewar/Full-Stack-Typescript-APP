@@ -1,9 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../../server');
-const { assert } = require('chai');
+import chai, { assert } from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../../server';
+// const { assert } = require('chai');
 
-const logOutTest = (e, pw) => {
+const logOutTest = (e: any, pw: any): void => {
 	describe('', () => {
 		it('User logged out*', (done) => {
 			chai
@@ -23,4 +23,4 @@ const logOutTest = (e, pw) => {
 	});
 };
 
-module.exports = logOutTest;
+export default logOutTest;

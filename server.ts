@@ -12,16 +12,24 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 const connectDb = async () => {
 	try {
-		let db = process.env.MONGO_URI as string;
+		let db: string = process.env.MONGO_URI!;
 
 		if (process.env.NODE_ENV === 'test') {
-			db = process.env.MONGO_URI_TEST as string;
+			db = process.env.MONGO_URI_TEST!;
 		}
 
-		await mongoose.connect(db, {
+		// await mongoose.connect(db, {
+		// 	useNewUrlParser: true,
+		// 	useUnifiedTopology: true,
+		// } as ConnectOptions);
+
+		let options = {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-		} as ConnectOptions);
+		};
+
+		//@ts-ignore
+		await mongoose.connect(db, options);
 
 		console.log('All good');
 	} catch (err) {
@@ -60,4 +68,4 @@ app.listen(PORT, () => {
 	console.log(`Server running on ${PORT}`);
 });
 
-module.exports = app;
+export default app;

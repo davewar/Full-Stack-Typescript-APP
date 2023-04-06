@@ -1,20 +1,15 @@
-const chai = require('chai');
-let expect = chai.expect;
-let should = chai.should();
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { assert, use } = require('chai');
-const { log } = require('console');
+import chai, { expect, assert, use } from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server';
+import logOutTest from './__testUtils__/userlogout';
 
-const logOutTest = require('./__testUtils__/userlogout');
+import LOGINS from './__testUtils__/logins';
 
-const LOGINS = require('./__testUtils__/logins');
+import 'dotenv/config';
 
-require('dotenv').config();
-let userPassword = process.env.userpassword;
-
-let accessToken = '';
-let userID = '';
+let userPassword = process.env.userpassword as string;
+let accessToken: string = '';
+let userID: string = '';
 
 chai.use(chaiHttp);
 
@@ -42,10 +37,9 @@ describe('* User private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 1);
-						accessToken = res.body.accesstoken;
+						expect(res.body.msg.user.should.have.keys('id', 'name', 'role'));
+						expect(res.body.msg.user).to.have.property('role', 1);
+						accessToken = res.body.msg.accesstoken;
 
 						//gets all users
 						chai
@@ -74,7 +68,7 @@ describe('* User private view pages *', () => {
 
 								//get id of user we will amend
 								let deleteID = res.body.msg.filter(
-									(item) => item.email === 'delete@testmocha.com'
+									(item: any) => item.email === 'delete@testmocha.com'
 								);
 
 								userID = deleteID[0]._id;
@@ -115,11 +109,11 @@ describe('* User private view pages *', () => {
 
 					//check prev changes
 					let person = res.body.msg.filter(
-						(item) => item.email === 'delete@testmocha.com'
+						(item: any) => item.email === 'delete@testmocha.com'
 					);
 
 					expect(person[0]).to.have.property('email', 'delete@testmocha.com');
-					expect(person[0]).to.have.property('validated', 'true');
+					expect(person[0]).to.have.property('validated', true);
 					expect(person[0]).to.have.property('role', 2);
 
 					done();
@@ -218,11 +212,10 @@ describe('* User private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 0);
+						expect(res.body.msg.user.should.have.keys('id', 'name', 'role'));
+						expect(res.body.msg.user).to.have.property('role', 0);
 
-						accessToken = res.body.accesstoken;
+						accessToken = res.body.msg.accesstoken;
 
 						//gets all users
 						chai
@@ -316,10 +309,9 @@ describe('* User private view pages *', () => {
 						);
 						done();
 					} else {
-						expect(res.body.should.have.keys('accesstoken', 'user'));
-						expect(res.body.user.should.have.keys('id', 'name', 'role'));
-						expect(res.body.user).to.have.property('role', 2);
-						accessToken = res.body.accesstoken;
+						expect(res.body.msg.user.should.have.keys('id', 'name', 'role'));
+						expect(res.body.msg.user).to.have.property('role', 2);
+						accessToken = res.body.msg.accesstoken;
 
 						//gets all users
 						chai
@@ -382,13 +374,13 @@ describe('* User private view pages *', () => {
 
 					//check prev changes
 					let person = res.body.msg.filter(
-						(item) => item.email === 'delete@testmocha.com'
+						(item: any) => item.email === 'delete@testmocha.com'
 					);
 
 					expect(person[0]).to.have.property('email', 'delete@testmocha.com');
-					expect(person[0]).to.have.property('validated', 'true');
+					expect(person[0]).to.have.property('validated', true);
 					expect(person[0]).to.have.property('role', 2);
-					expect(person[0]).to.have.property('active', 'false');
+					expect(person[0]).to.have.property('active', false);
 
 					done();
 				});

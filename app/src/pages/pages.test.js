@@ -5,7 +5,15 @@ import user from '@testing-library/user-event';
 import { UserContext } from '../contexts/user';
 import '@testing-library/jest-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { ReactElement } from 'react';
+
+const mycustomRender = (ui, { providerProps, ...renderOptions }) => {
+	return render(
+		<UserContext.Provider value={providerProps}>
+			<HelmetProvider>{ui}</HelmetProvider>
+		</UserContext.Provider>,
+		renderOptions
+	);
+};
 
 let providerProps = {
 	user: '',
@@ -13,38 +21,11 @@ let providerProps = {
 	isUser: false,
 	isEditor: false,
 	isAdmin: false,
-	role: null,
+	role: '',
 	logUserOut: jest.fn(function () {
 		providerProps.isLogged = false;
 	}),
 	isLogged: false,
-};
-
-// type PType = {
-// 	user: string;
-// 	accessToken: string;
-// 	isUser: boolean;
-// 	isEditor: boolean;
-// 	isAdmin: boolean;
-// 	role: number | null;
-// 	logUserOut: typeof jest.fn;  
-// 	isLogged: boolean;
-// };
-
-// type ChildrenProp = {
-// 	children: React.ReactNode;
-// };
-
-const mycustomRender = (
-	ui,
-	{ providerProps, ...renderOptions }
-) => {
-	return render(
-		<UserContext.Provider value={providerProps}>
-			<HelmetProvider>{ui}</HelmetProvider>
-		</UserContext.Provider>,
-		renderOptions
-	);
 };
 
 describe('.Pages', () => {
@@ -58,7 +39,7 @@ describe('.Pages', () => {
 
 	test('Component renders correctly, expect public link to navigate to correct page - login', async () => {
 		user.setup();
-		mycustomRender(<Pages />, { providerProps }: Prov);
+		mycustomRender(<Pages />, { providerProps });
 		expect(window.location.pathname).toBe('/');
 		let item = screen.getByRole('link', { name: 'Log In' });
 		await user.click(item);

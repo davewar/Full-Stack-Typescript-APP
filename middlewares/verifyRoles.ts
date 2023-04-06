@@ -11,8 +11,12 @@ export const verifyRoles = (...allowedRoles: any) => {
 
 			const user = await User.findById(id);
 
+			// console.log('user verifyroles', user);
+
 			if (user?.active === false || user?.validated === false)
 				return res.status(401).json({ errors: 'Access denied 1b' });
+
+			// console.log(req.user, 'verifyrole here');
 
 			const rolesArray = [...allowedRoles];
 

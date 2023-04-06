@@ -22,12 +22,12 @@ https://bobbyhadz.com/blog/typescript-no-index-signature-with-parameter-of-type-
 
 https://joyofcode.xyz/typescript-fundamentals
 
-Backend:  @types/cookie-parser  @types/nodemailer
+Backend:  @types/cookie-parser  @types/nodemailer  @types/chai  @types/mocha
 @types/body-parser @types/config @types/cors @types/express @types/node @types/mongoose @types/bcrypt @types/jsonwebtoken ts-node typescript -D
 
-TYPESCRIPT_NODE_STARTER example
-https://github.com/microsoft/TypeScript-Node-Starter/tree/master/src
+///////////
 
+https://stackoverflow.com/questions/60993812/mocha-typescript-cannot-use-import-statement-outside-a-module
 
+https://chiragrupani.medium.com/writing-unit-tests-in-typescript-d4719b8a0a40
 
-https://www.youtube.com/watch?v=KgnJNJk9-to
