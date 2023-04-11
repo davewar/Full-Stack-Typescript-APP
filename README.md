@@ -5,5 +5,7 @@
 - React
 - Node
 
-- React Testing Library
+Testing:
+
+- React Testing Library / Mock Service Worker
 - Mocka / Chai
